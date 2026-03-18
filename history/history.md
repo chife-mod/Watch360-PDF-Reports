@@ -123,8 +123,22 @@
 
 ### Технические решения
 - Позиционирование: absolute + inline styles (px) — точное соответствие Figma
-- Inter font: уже подключён в `index.css` через Google Fonts woff2
-- Ассеты: импортируются через Vite relative imports из `assets/logos/`
+- Inter font: подключён в `index.css` через Google Fonts woff2
+- Ассеты: лежат в `public/logos/` и подключаются строками `/logos/*.svg`
+
+### ⚠️ Инциденты / Фиксы этой сессии
+
+- **Assets сохранены как .png, но внутри SVG**
+  Figma экспортировала SVG-файлы с расширением `.png`. Браузер не рендерил их (broken image).
+  **Решение:** переименованы в `.svg`, перенесены в `public/logos/` (Vite отдаёт как статику по URL `/logos/`).
+  **Вывод:** всегда проверять `file` command после скачивания ассетов из Figma.
+
+- **preview_screenshot инструмента не рендерит картинки с localhost**
+  Для проверки использовать `Claude in Chrome` MCP → `navigate` + `computer screenshot`.
+
+- **Figma `get_screenshot` → смерть сессии**
+  При экспорте большого фрейма: 400 "Could not process image". Изображение попадает в контекст → следующий запрос тоже падает. Выход только перезапуск сессии.
+  **Правило:** никогда не вызывать `get_screenshot`. Только `get_design_context`.
 
 ---
 
@@ -166,3 +180,12 @@
 - [ ] `.env` — Google API ключи (структура файла)
 - [ ] `npm run pdf` — скрипт для генерации PDF через Puppeteer
 - [ ] Inter font локально (woff2) — сейчас через Google Fonts (для Puppeteer нужен локальный)
+
+---
+
+## Приоритет следующего шага
+
+1. **`TableSlide.tsx`** — Top 25 + Insights, Figma node `2-6`
+2. **`TwoColumn.tsx`** layout + `Table.tsx` примитив
+3. **`Viewer.tsx`** — карусель слайдов
+4. **Puppeteer** — PDF экспорт

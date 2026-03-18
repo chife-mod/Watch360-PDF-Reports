@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated PDFs
+reports/
+
+# Claude memory (local only)
+.claude/
