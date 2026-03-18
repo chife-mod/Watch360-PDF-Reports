@@ -1,0 +1,173 @@
+# Watch360 PDF Reports — Agent Onboarding
+
+> Read this file first. It contains everything you need to work on this project.
+> Keep `history/history.md` updated after every significant change.
+
+---
+
+## What This Project Is
+
+A tool for generating **premium corporate PDF reports** for Watch 360 (powered by Semantic Force).
+Data comes from Google Sheets. Output: a vector PDF at **720×450px**, suitable for screens and print.
+Includes a web interface for preview and download.
+Future: Remotion-compatible for animated slide exports.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 19 + TypeScript |
+| Build | Vite 8 |
+| Charts | Recharts |
+| Icons | @tabler/icons-react |
+| Font | Inter only (all sizes) |
+| Styling | Tailwind CSS 4 |
+| PDF Export | Puppeteer (headless Chrome → vector PDF) |
+| Data Source | Google Sheets API v4 |
+| Animation (future) | Framer Motion → Remotion |
+
+---
+
+## Current Status
+
+**Phase 1 (MVP) is in progress.** See full log → [`history/history.md`](history/history.md)
+
+### Done
+- Project scaffold: Vite + React + TS + Tailwind
+- Design tokens: `src/theme/colors.ts`, `src/theme/typography.ts`
+- Assets downloaded: `assets/logos/` (semantic-force.png, watch360.png, cover-graphic.png)
+- Implementation plan: `docs/plans/implementation-plan.md`
+
+### Not Done (build these next, in order)
+1. `src/components/ui/SlideFrame.tsx` — 720×450px wrapper
+2. `src/components/ui/Header.tsx` — top-right: "Powered by" + SF logo + Watch360 logo
+3. `src/components/ui/Footer.tsx` — bottom-left: period | bottom-right: category (50% opacity)
+4. `src/components/slides/CoverSlide.tsx` — Figma node 4-802
+5. `src/components/slides/TableSlide.tsx` — Figma node 2-6 (Top 25 + Insights)
+6. `src/app/Viewer.tsx` — slide carousel on black background
+7. `src/app/VersionDropdown.tsx` + `src/app/DownloadButton.tsx`
+8. `src/data/` — Google Sheets integration + data types
+9. `src/lib/pdf.ts` — Puppeteer PDF generation
+10. `App.tsx` — replace default Vite template
+
+---
+
+## Project Structure
+
+```
+Watch360-PDF-Reports/
+├── AGENTS.md                   ← you are here
+├── CLAUDE.md                   ← Claude Code specific
+├── history/
+│   └── history.md              ← log of all work done (update this!)
+├── docs/
+│   ├── plans/
+│   │   └── implementation-plan.md
+│   └── components/             ← per-component docs (add as you build)
+├── assets/
+│   └── logos/                  ← SF logo, Watch360 logo, cover graphic
+├── src/
+│   ├── theme/                  ← design tokens (colors, typography)
+│   ├── components/
+│   │   ├── slides/             ← one file per slide type
+│   │   ├── charts/             ← Recharts wrappers
+│   │   └── ui/                 ← primitives (SlideFrame, Header, Footer, Table...)
+│   ├── layouts/                ← TwoColumn.tsx etc
+│   ├── data/                   ← Google Sheets API + types
+│   ├── lib/                    ← pdf.ts, report.ts, storage.ts
+│   └── app/                    ← Viewer, VersionDropdown, DownloadButton
+└── reports/                    ← generated PDFs (gitignored)
+```
+
+---
+
+## Design Rules (strict — do not deviate)
+
+### Colors
+```
+Background:      #0D0D0D  (near-black, all slides)
+Text primary:    #FFFFFF
+Text secondary:  rgba(255,255,255,0.5)  (50% opacity)
+Border:          #808080  (table header only)
+App background:  #000000  (web viewer)
+```
+
+### Typography (Inter only, no other fonts)
+| Role | Size | Weight | Opacity |
+|------|------|--------|---------|
+| Slide title (H1) | 48px | Regular | 100% |
+| Slide subtitle | 10px | Regular | 100% |
+| Table header | 8px | Regular | 50% |
+| Body / insights | 10px | Regular | 100% |
+| Numbering (01, 02…) | 7px | Regular | 50% |
+| Footer | 10px | Regular | 100% / 50% |
+| Micro ("Powered by") | 6px | Regular | 50% |
+
+### Style Rules
+- **No** glassmorphism, card shadows, border-radius, gradients on text
+- Hierarchy = font size + opacity only (no color variation)
+- Maximum whitespace
+- Tables: only `border-bottom` on header row (`#808080`), no other borders
+- Graphics = abstract illustrations with color gradients (already in assets)
+
+### Repeating elements on every slide
+- **Header (top-right):** "Powered by" (6px, 50%) · SF logo · divider · Watch360 logo
+- **Footer left:** period (e.g. "Dec 2025 – Feb 2026"), 10px
+- **Footer right:** category (e.g. "Luxury Watches"), 10px, 50% opacity
+
+---
+
+## Slide Types
+
+| ID | Component | Figma node | Status |
+|----|-----------|-----------|--------|
+| cover | CoverSlide.tsx | 4-802 | ❌ not built |
+| table-with-insights | TableSlide.tsx | 2-6 | ❌ not built |
+
+**Figma file key:** `V8XA0PVaAjxvPbq24stJXk`
+Use `get_design_context` to inspect nodes — do NOT use `get_screenshot` (causes API errors with large frames).
+
+---
+
+## Slide Size & Rendering
+
+- Fixed size: **720×450px** (16:10)
+- In web viewer: `transform: scale()` to fit window
+- PDF: Puppeteer opens each slide at exact dimensions, exports vector PDF
+
+---
+
+## Data Flow
+
+```
+Google Sheet URL
+  → Google Sheets API v4 → JSON (all tabs)
+  → transform.ts: map tabs → slide props
+  → React: render slide components
+  → Puppeteer: screenshot each → PDF pages
+  → merge → reports/YYYY-MM-DD/report.pdf
+```
+
+---
+
+## Working Conventions
+
+- **Always update `history/history.md`** after completing a feature or fixing a bug
+- Components are pure React — no side effects, data comes via props
+- All sizes in px (not rem) — slides are fixed-size, not responsive
+- Test each slide with `npm run dev` before moving to next
+- Keep slide components dumb: no API calls, no state — just render props
+- Figma is the source of truth for visual design
+
+---
+
+## Commands
+
+```bash
+npm run dev      # start Vite dev server
+npm run build    # TypeScript check + Vite build
+npm run lint     # ESLint
+npm run pdf      # generate PDF via Puppeteer (not yet implemented)
+```
