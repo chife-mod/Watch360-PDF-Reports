@@ -1,4 +1,4 @@
-import coverGraphic from '../../../assets/logos/cover-graphic.png'
+const coverGraphic = '/logos/cover-graphic.svg'
 import { Footer } from '../ui/Footer'
 import { Header } from '../ui/Header'
 import { SlideFrame } from '../ui/SlideFrame'

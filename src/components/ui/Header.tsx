@@ -1,5 +1,5 @@
-import sfLogo from '../../../assets/logos/semantic-force.png'
-import w360Logo from '../../../assets/logos/watch360.png'
+const sfLogo = '/logos/semantic-force.svg'
+const w360Logo = '/logos/watch360.svg'
 
 /**
  * Header — логотипы в правом верхнем углу каждого слайда.
