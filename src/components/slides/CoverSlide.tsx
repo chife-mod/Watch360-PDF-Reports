@@ -10,6 +10,8 @@ export interface CoverSlideProps {
   period: string
   /** Правая строка футера. Пример: "www.watch360.ai" */
   website?: string
+  /** URL для кликабельной ссылки в футере. Пример: "https://watch360.ai" */
+  websiteUrl?: string
 }
 
 /**
@@ -27,6 +29,7 @@ export function CoverSlide({
   title,
   period,
   website = 'www.watch360.ai',
+  websiteUrl = 'https://watch360.ai',
 }: CoverSlideProps) {
   return (
     <SlideFrame>
@@ -65,7 +68,7 @@ export function CoverSlide({
         {title}
       </h1>
 
-      <Footer period={period} right={website} />
+      <Footer period={period} right={website} rightUrl={websiteUrl} />
     </SlideFrame>
   )
 }

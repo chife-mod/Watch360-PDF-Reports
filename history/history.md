@@ -345,3 +345,31 @@ public/                       ← Vite static serving
 1. **Google Sheets API** — подключение данных (`src/data/`)
 2. **Puppeteer** — PDF экспорт (`src/lib/pdf.ts`)
 3. **Дополнительные слайды** — по мере появления в Figma
+
+---
+
+## 2026-03-19 — Кликабельная ссылка в футере
+
+### ✅ Сделано
+
+#### Footer (`src/components/ui/Footer.tsx`)
+- [x] Добавлен optional prop `rightUrl` — если передан, текст справа оборачивается в `<a>` без подчёркивания (`textDecoration: 'none'`, `color: 'inherit'`) и с `target="_blank" rel="noopener noreferrer"`
+- [x] Стиль текста не меняется: opacity 50%, 10px Inter — всё то же
+
+#### Слайды
+- [x] `CoverSlide.tsx` — добавлен `websiteUrl?: string`, по умолчанию `'https://watch360.ai'`, передаётся в `Footer` как `rightUrl`
+- [x] `TableSlide.tsx` — добавлен `footerRightUrl?: string`, по умолчанию `'https://watch360.ai'`
+- [x] `WatchReferencesSlide.tsx` — добавлен `footerRightUrl?: string`, по умолчанию `'https://watch360.ai'`
+
+### Технические решения
+- Ссылка прозрачна визуально (без подчёркивания), но кликабельна в PDF и в браузере
+- Backward-compatible: если `rightUrl` не передан — текст остаётся простым `<span>`, поведение не меняется
+
+---
+
+## Приоритет следующего шага
+
+1. **Google Sheets API** — подключение данных (`src/data/`)
+2. **Puppeteer** — PDF экспорт (`src/lib/pdf.ts`)
+3. **Дополнительные слайды** — по мере появления в Figma
+

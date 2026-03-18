@@ -32,6 +32,8 @@ export interface WatchReferencesSlideProps {
   watches: WatchReference[]
   /** Правая часть футера */
   footerRight?: string
+  /** URL для кликабельной ссылки в футере. Пример: "https://watch360.ai" */
+  footerRightUrl?: string
 }
 
 /**
@@ -46,6 +48,7 @@ export function WatchReferencesSlide({
   title = 'Watch References',
   watches,
   footerRight = 'www.watch360.ai',
+  footerRightUrl = 'https://watch360.ai',
 }: WatchReferencesSlideProps) {
   return (
     <SlideFrame>
@@ -272,7 +275,7 @@ export function WatchReferencesSlide({
         ))}
       </div>
 
-      <Footer right={footerRight} />
+      <Footer right={footerRight} rightUrl={footerRightUrl} />
     </SlideFrame>
   )
 }

@@ -30,6 +30,8 @@ export interface TableSlideProps {
   period?: string
   /** Правая часть футера */
   footerRight?: string
+  /** URL для кликабельной ссылки в футере. Пример: "https://watch360.ai" */
+  footerRightUrl?: string
 }
 
 /**
@@ -54,6 +56,7 @@ export function TableSlide({
   insights,
   period,
   footerRight = 'www.watch360.ai',
+  footerRightUrl = 'https://watch360.ai',
 }: TableSlideProps) {
   return (
     <SlideFrame>
@@ -289,7 +292,7 @@ export function TableSlide({
         ))}
       </div>
 
-      <Footer period={period} right={footerRight} />
+      <Footer period={period} right={footerRight} rightUrl={footerRightUrl} />
     </SlideFrame>
   )
 }
