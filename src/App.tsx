@@ -91,12 +91,32 @@ function App() {
   const [fitScale, setFitScale] = useState(() =>
     calcFitScale(window.innerWidth, window.innerHeight),
   )
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const totalSlides = 4
 
   useEffect(() => {
     const onResize = () =>
       setFitScale(calcFitScale(window.innerWidth, window.innerHeight))
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // IntersectionObserver — следим за какой слайд сейчас в viewport
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+    for (let i = 0; i < totalSlides; i++) {
+      const el = document.getElementById(`slide-${i}`)
+      if (!el) continue
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setCurrentSlide(i)
+        },
+        { threshold: 0.5 },
+      )
+      obs.observe(el)
+      observers.push(obs)
+    }
+    return () => observers.forEach(o => o.disconnect())
   }, [])
 
   const handleExportPdf = () => {
@@ -124,11 +144,11 @@ function App() {
         selectedId={selectedVersion}
         onSelect={setSelectedVersion}
         onExportPdf={handleExportPdf}
-        currentSlide={0}
-        totalSlides={4}
+        currentSlide={currentSlide}
+        totalSlides={totalSlides}
       />
 
-      <SlideWrapper scale={scale}>
+      <SlideWrapper scale={scale} slideIndex={0}>
         <CoverSlide
           title="Watch Media"
           period="Dec 2025 – Feb 2026"
@@ -136,7 +156,7 @@ function App() {
         />
       </SlideWrapper>
 
-      <SlideWrapper scale={scale}>
+      <SlideWrapper scale={scale} slideIndex={1}>
         <TableSlide
           titleLines={['Top Sources', 'Used by AI']}
           subtitle="Information sources used by AI models for diver watch recommendations across price segments"
@@ -146,7 +166,7 @@ function App() {
         />
       </SlideWrapper>
 
-      <SlideWrapper scale={scale}>
+      <SlideWrapper scale={scale} slideIndex={2}>
         <WatchReferencesSlide
           watches={MOCK_WATCHES}
           footerRight="www.watch360.ai"
@@ -154,7 +174,7 @@ function App() {
       </SlideWrapper>
 
       {/* Slide 04 — Quote */}
-      <SlideWrapper scale={scale}>
+      <SlideWrapper scale={scale} slideIndex={3}>
         <QuoteSlide
           quote={"“AI doesn’t just recommend watches — it defines which brands exist in the consumer’s reality.”"}
           author="ChatGPT"
@@ -173,13 +193,16 @@ function App() {
 
 function SlideWrapper({
   scale,
+  slideIndex,
   children,
 }: {
   scale: number
+  slideIndex: number
   children: React.ReactNode
 }) {
   return (
     <div
+      id={`slide-${slideIndex}`}
       style={{
         width: SLIDE_W * scale,
         height: SLIDE_H * scale,
