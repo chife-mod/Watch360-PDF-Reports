@@ -1,4 +1,4 @@
-const coverGraphic = '/logos/cover-graphic.svg'
+const coverImage = '/images/Cover_Image.webp'
 import { Footer } from '../ui/Footer'
 import { Header } from '../ui/Header'
 import { SlideFrame } from '../ui/SlideFrame'
@@ -16,10 +16,10 @@ export interface CoverSlideProps {
  * CoverSlide — обложка отчёта Watch 360.
  *
  * Структура (720×450px):
- *   - Header: логотипы top-right
- *   - Cover graphic: абстрактная иллюстрация (top: 72, h: 242, full width)
- *   - Title: 48px, left: 32, top: 340
- *   - Footer: период слева + сайт справа, top: 408
+ *   - Header: единый логотип Watch360 top-right (top: 25, right: 32)
+ *   - Cover image: абстрактная иллюстрация (top: 72, h: 242, full width)
+ *   - Title: 48px Inter Regular, left: 32, top: calc(50% + 115px) ≈ 340
+ *   - Footer: период слева (left: 35, top: calc(50%+183px) ≈ 408) + сайт справа (50% opacity)
  *
  * Figma: node 4-802, file V8XA0PVaAjxvPbq24stJXk
  */
@@ -34,7 +34,7 @@ export function CoverSlide({
 
       {/* Абстрактная иллюстрация — по всей ширине, фиксированная высота */}
       <img
-        src={coverGraphic}
+        src={coverImage}
         alt=""
         style={{
           position: 'absolute',

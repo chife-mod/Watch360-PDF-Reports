@@ -36,21 +36,21 @@ Future: Remotion-compatible for animated slide exports.
 
 ### Done
 - Project scaffold: Vite + React + TS + Tailwind
-- Design tokens: `src/theme/colors.ts`, `src/theme/typography.ts`
-- Assets downloaded: `assets/logos/` (semantic-force.png, watch360.png, cover-graphic.png)
+- Design tokens: `src/theme/colors.ts`, `src/theme/typography.ts`, `src/theme/categories.ts`
+- Assets: `assets/logos/Logo_Top_On_Dark.svg`, images in WebP 80% (3x for print)
 - Implementation plan: `docs/plans/implementation-plan.md`
+- UI primitives: `SlideFrame.tsx`, `Header.tsx`, `Footer.tsx`
+- Slides: `CoverSlide.tsx`, `TableSlide.tsx`, `WatchReferencesSlide.tsx`, `QuoteSlide.tsx`
+- Viewer: vertical scroll layout, fit-to-viewport scaling (width + height)
+- Toolbar: version dropdown + Export PDF button, gradient overlay
+- Zoom slider: bottom-right, 30–100%, FIT button
+- Design system docs: `docs/design-system.md`
 
 ### Not Done (build these next, in order)
-1. `src/components/ui/SlideFrame.tsx` — 720×450px wrapper
-2. `src/components/ui/Header.tsx` — top-right: "Powered by" + SF logo + Watch360 logo
-3. `src/components/ui/Footer.tsx` — bottom-left: period | bottom-right: category (50% opacity)
-4. `src/components/slides/CoverSlide.tsx` — Figma node 4-802
-5. `src/components/slides/TableSlide.tsx` — Figma node 2-6 (Top 25 + Insights)
-6. `src/app/Viewer.tsx` — slide carousel on black background
-7. `src/app/VersionDropdown.tsx` + `src/app/DownloadButton.tsx`
-8. `src/data/` — Google Sheets integration + data types
-9. `src/lib/pdf.ts` — Puppeteer PDF generation
-10. `App.tsx` — replace default Vite template
+1. `src/data/` — Google Sheets integration + data types
+2. `src/lib/pdf.ts` — Puppeteer PDF generation
+3. Additional slides as designed in Figma
+4. `.env` — Google API keys
 
 ---
 
@@ -113,9 +113,9 @@ App background:  #000000  (web viewer)
 - Graphics = abstract illustrations with color gradients (already in assets)
 
 ### Repeating elements on every slide
-- **Header (top-right):** "Powered by" (6px, 50%) · SF logo · divider · Watch360 logo
-- **Footer left:** period (e.g. "Dec 2025 – Feb 2026"), 10px
-- **Footer right:** category (e.g. "Luxury Watches"), 10px, 50% opacity
+- **Header (top-right):** Watch360 + "Powered by SemanticForce" (single SVG: `Logo_Top_On_Dark.svg`)
+- **Footer left:** period (e.g. "Dec 2025 – Feb 2026"), 10px — only on CoverSlide
+- **Footer right:** website/category, 10px, 50% opacity
 
 ---
 
@@ -123,8 +123,10 @@ App background:  #000000  (web viewer)
 
 | ID | Component | Figma node | Status |
 |----|-----------|-----------|--------|
-| cover | CoverSlide.tsx | 4-802 | ❌ not built |
-| table-with-insights | TableSlide.tsx | 2-6 | ❌ not built |
+| cover | CoverSlide.tsx | 4-802 | ✅ built |
+| table-with-insights | TableSlide.tsx | 2-6 | ✅ built |
+| watch-references | WatchReferencesSlide.tsx | 21-2192 | ✅ built |
+| quote | QuoteSlide.tsx | 17-2084 | ✅ built |
 
 **Figma file key:** `V8XA0PVaAjxvPbq24stJXk`
 Use `get_design_context` to inspect nodes — do NOT use `get_screenshot` (causes API errors with large frames).
