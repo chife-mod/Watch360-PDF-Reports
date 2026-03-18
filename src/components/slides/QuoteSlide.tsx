@@ -1,5 +1,6 @@
 import { SlideFrame } from '../ui/SlideFrame'
 import { Header } from '../ui/Header'
+import { Footer } from '../ui/Footer'
 import quotesImg from '../../../assets/images/Quotes_Image_1.webp'
 
 export interface QuoteSlideProps {
@@ -13,6 +14,8 @@ export interface QuoteSlideProps {
   backgroundImage?: string
   /** Правый нижний угол — website */
   footerRight?: string
+  /** URL для кликабельной ссылки в футере. Пример: "https://watch360.ai" */
+  footerRightUrl?: string
 }
 
 /**
@@ -28,6 +31,7 @@ export function QuoteSlide({
   authorDescription,
   backgroundImage = quotesImg,
   footerRight = 'www.watch360.ai',
+  footerRightUrl = 'https://watch360.ai',
 }: QuoteSlideProps) {
   /** Правый якорь — right: 32px, ширина текстового блока цитаты ~328px */
   const RIGHT_OFFSET = 32
@@ -142,23 +146,7 @@ export function QuoteSlide({
         </div>
       </div>
 
-      {/* Footer — website, right: 32px */}
-      {footerRight && (
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 17,
-            right: RIGHT_OFFSET,
-            fontFamily: 'Inter, sans-serif',
-            fontSize: 10,
-            fontWeight: 400,
-            color: '#fff',
-            opacity: 0.5,
-          }}
-        >
-          {footerRight}
-        </div>
-      )}
+      <Footer right={footerRight} rightUrl={footerRightUrl} />
     </SlideFrame>
   )
 }
