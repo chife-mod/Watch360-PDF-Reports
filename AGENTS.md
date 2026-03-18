@@ -14,6 +14,30 @@ Future: Remotion-compatible for animated slide exports.
 
 ---
 
+## Product Philosophy
+
+This is **not** a one-off report for Watch360. It is a **universal white-label report template** used across 10+ brands under the Semantic Force umbrella.
+
+### What stays the same across all brands:
+- Dark theme, layout, typography, component structure
+- Slide types (table, quote, watch references, etc.)
+- Color system: hierarchy through font size + opacity only
+- Visual language: maximum whitespace, no decorative elements
+
+### What changes per brand:
+- Logo in the header (replacing Watch360 logo)
+- Report title and subtitle
+- Data (from Google Sheets — different sheet per brand)
+- Cover/quote imagery
+
+### Design implications:
+- **Neutral is intentional.** The dark theme and abstract aesthetics are brand-agnostic on purpose — they must work for watches, cosmetics, automotive, and any other category.
+- **No brand-specific colors** in the template. Accent colors (teal for #1, category dots) are data-driven, not brand-driven.
+- **The template IS the brand** — it's the Semantic Force / Watch360 platform brand, not the end-client brand.
+- When evaluating design: "generic" = correct. The template should feel premium and professional without committing to any particular industry aesthetic.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
