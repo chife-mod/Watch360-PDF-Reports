@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Toolbar, type ReportVersion } from './app/Toolbar'
 import { CoverSlide } from './components/slides/CoverSlide'
+import { SectionCoverSlide } from './components/slides/SectionCoverSlide'
 import { TableSlide } from './components/slides/TableSlide'
 import { WatchReferencesSlide } from './components/slides/WatchReferencesSlide'
 import { QuoteSlide } from './components/slides/QuoteSlide'
@@ -95,7 +96,7 @@ function App() {
     calcFitScale(window.innerWidth, window.innerHeight),
   )
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 5
+  const totalSlides = 6
 
   useEffect(() => {
     const onResize = () =>
@@ -160,6 +161,16 @@ function App() {
       </SlideWrapper>
 
       <SlideWrapper scale={scale} slideIndex={1}>
+        <SectionCoverSlide
+          titleLine1="Shaping Visibility"
+          titleLine2="in the Age of AI"
+          category="Watch Media"
+          period="Dec 2025 – Feb 2026"
+          website="www.watch360.ai"
+        />
+      </SlideWrapper>
+
+      <SlideWrapper scale={scale} slideIndex={2}>
         <TableSlide
           titleLines={['Top Sources ', 'Used by AI']}
           subtitle="Information sources used by AI models for diver watch recommendations across price segments"
@@ -169,15 +180,15 @@ function App() {
         />
       </SlideWrapper>
 
-      <SlideWrapper scale={scale} slideIndex={2}>
+      <SlideWrapper scale={scale} slideIndex={3}>
         <WatchReferencesSlide
           watches={MOCK_WATCHES}
           footerRight="www.watch360.ai"
         />
       </SlideWrapper>
 
-      {/* Slide 04 — Quote 1 */}
-      <SlideWrapper scale={scale} slideIndex={3}>
+      {/* Slide 05 — Quote 1 */}
+      <SlideWrapper scale={scale} slideIndex={4}>
         <QuoteSlide
           quote="“AI doesn’t just recommend watches — it defines which brands exist in the consumer’s reality.”"
           author="ChatGPT"
@@ -186,8 +197,8 @@ function App() {
         />
       </SlideWrapper>
 
-      {/* Slide 05 — Quote 2 */}
-      <SlideWrapper scale={scale} slideIndex={4}>
+      {/* Slide 06 — Quote 2 */}
+      <SlideWrapper scale={scale} slideIndex={5}>
         <QuoteSlide
           quote="“The watch that earns the most media attention is not always the one on the most wrists — it’s the one in the most conversations.”"
           author="Claude"
