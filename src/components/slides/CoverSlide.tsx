@@ -1,4 +1,4 @@
-const coverImage = '/images/Cover_Image.webp'
+import coverImage from '../../../assets/images/Cover_Image.webp'
 import { Footer } from '../ui/Footer'
 import { Header } from '../ui/Header'
 import { SlideFrame } from '../ui/SlideFrame'

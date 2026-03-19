@@ -1,3 +1,5 @@
+import logoSvg from '../../../assets/logos/Logo_Top_On_Dark.svg'
+
 /**
  * Header — логотип Watch360 в правом верхнем углу каждого слайда.
  * Единый SVG: иконка Watch360 + "WATCH360" + "Powered by SemanticForce"
@@ -7,7 +9,7 @@
 export function Header() {
   return (
     <img
-      src="/logos/Logo_Top_On_Dark.svg"
+      src={logoSvg}
       alt="Watch 360 — Powered by Semantic Force"
       style={{
         position: 'absolute',

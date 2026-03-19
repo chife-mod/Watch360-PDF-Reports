@@ -2,6 +2,7 @@ import { Header } from '../ui/Header'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
 import { getCategoryColor } from '../../theme/categories'
+import tablerBulb from '../../../assets/icons/tabler_bulb.svg'
 
 /** Максимальное occurrence для расчёта ширины бара */
 const MAX_OCCURRENCE = 100
@@ -236,7 +237,7 @@ export function TableSlide({
         {/* Insight header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <img
-            src="/icons/tabler_bulb.svg"
+            src={tablerBulb}
             alt=""
             style={{ width: 16, height: 16, display: 'block' }}
           />

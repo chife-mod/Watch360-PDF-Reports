@@ -4,8 +4,8 @@ import { CoverSlide } from './components/slides/CoverSlide'
 import { TableSlide } from './components/slides/TableSlide'
 import { WatchReferencesSlide } from './components/slides/WatchReferencesSlide'
 import { QuoteSlide } from './components/slides/QuoteSlide'
-import watchImg from '../assets/images/Watch 1.png'
-import quotesImg2 from '../assets/images/Quotes_Image_2.webp'
+import watchImg from '../assets/images/Watch 1.webp'
+import quotesImg2 from '../assets/images/2.webp'
 
 /* ── Mock data ────────────────────────────────────────────── */
 
