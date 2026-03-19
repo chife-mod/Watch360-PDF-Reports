@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Toolbar, type ReportVersion } from './app/Toolbar'
-import { CoverSlide } from './components/slides/CoverSlide'
-import { SectionCoverSlide } from './components/slides/SectionCoverSlide'
-import { TableSlide } from './components/slides/TableSlide'
-import { WatchReferencesSlide } from './components/slides/WatchReferencesSlide'
-import { QuoteSlide } from './components/slides/QuoteSlide'
-import watchImg from '../assets/images/Watch 1.webp'
-import quotesImg2 from '../assets/images/2.webp'
+import { TemplatesPage } from './app/TemplatesPage'
+import { SLIDE_TEMPLATES } from './app/templateRegistry'
 
 /* ── Mock data ────────────────────────────────────────────── */
 
@@ -14,59 +9,6 @@ const MOCK_VERSIONS: ReportVersion[] = [
   { id: '2026-03-18', date: '2026-03-18', title: 'Watch Media' },
   { id: '2026-02-15', date: '2026-02-15', title: 'Watch Media' },
   { id: '2026-01-12', date: '2026-01-12', title: 'Watch Media' },
-]
-
-const MOCK_TABLE_ROWS = [
-  { rank: 1, domain: 'teddybaldassarre.com', type: 'Watch Media', occurrence: 87 },
-  { rank: 2, domain: 'hewore.com', type: 'Blog', occurrence: 76 },
-  { rank: 3, domain: 'watchfinder.es', type: 'Marketplace', occurrence: 72 },
-  { rank: 4, domain: 'techwriteredc.com', type: 'Blog', occurrence: 64 },
-  { rank: 5, domain: 'watchcharts.com', type: 'Marketplace', occurrence: 62 },
-  { rank: 6, domain: 'chrono24.com', type: 'Marketplace', occurrence: 56 },
-  { rank: 7, domain: 'monochrome-watches.com', type: 'Watch Media', occurrence: 47 },
-  { rank: 8, domain: 'omegawatches.com', type: 'Watch Media', occurrence: 11 },
-  { rank: 9, domain: 'ablogtowatch.com', type: 'Watch Media', occurrence: 9 },
-  { rank: 10, domain: 'fratellowatches.com', type: 'Watch Media', occurrence: 7 },
-]
-
-const MOCK_INSIGHTS = [
-  { text: 'Watch media dominates across most segments.' },
-  { text: 'Marketplaces and manufacturer sites gain influence in higher price tiers.' },
-]
-
-const MOCK_WATCHES = [
-  {
-    image: watchImg,
-    brand: 'Grand Seiko',
-    model: 'Annual Accuracy Quartz SBGX361',
-    launchDate: 'Launch Apr, 2026',
-    mentions: 23, sources: 23, countries: 23,
-    priceRange: '$10 000-$25 000', dialColor: 'Blue', dialColorHex: '#455691',
-  },
-  {
-    image: watchImg,
-    brand: 'Grand Seiko',
-    model: 'Heritage Collection SBGA211',
-    launchDate: 'Launch Mar, 2026',
-    mentions: 19, sources: 17, countries: 14,
-    priceRange: '$5 000-$10 000', dialColor: 'White', dialColorHex: '#C0C0C0',
-  },
-  {
-    image: watchImg,
-    brand: 'Omega',
-    model: 'Seamaster Planet Ocean 600M',
-    launchDate: 'Launch Feb, 2026',
-    mentions: 31, sources: 28, countries: 19,
-    priceRange: '$5 000-$10 000', dialColor: 'Black', dialColorHex: '#3A3A3A',
-  },
-  {
-    image: watchImg,
-    brand: 'Rolex',
-    model: 'Submariner Date 126610LN',
-    launchDate: 'Launch Jan, 2026',
-    mentions: 45, sources: 38, countries: 27,
-    priceRange: '$10 000-$25 000', dialColor: 'Black', dialColorHex: '#3A3A3A',
-  },
 ]
 
 /* ── Constants ────────────────────────────────────────────── */
@@ -90,13 +32,14 @@ function calcFitScale(vw: number, vh: number) {
 /* ── App ──────────────────────────────────────────────────── */
 
 function App() {
+  const [view, setView] = useState<'report' | 'templates'>('report')
   const [selectedVersion, setSelectedVersion] = useState(MOCK_VERSIONS[0].id)
   const [zoom, setZoom] = useState(100)
   const [fitScale, setFitScale] = useState(() =>
     calcFitScale(window.innerWidth, window.innerHeight),
   )
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 6
+  const totalSlides = SLIDE_TEMPLATES.length
 
   useEffect(() => {
     const onResize = () =>
@@ -107,6 +50,7 @@ function App() {
 
   // IntersectionObserver — следим за какой слайд сейчас в viewport
   useEffect(() => {
+    if (view !== 'report') return
     const observers: IntersectionObserver[] = []
     for (let i = 0; i < totalSlides; i++) {
       const el = document.getElementById(`slide-${i}`)
@@ -121,10 +65,14 @@ function App() {
       observers.push(obs)
     }
     return () => observers.forEach(o => o.disconnect())
-  }, [])
+  }, [view])
 
   const handleExportPdf = () => {
     console.log('Export PDF — not implemented yet')
+  }
+
+  if (view === 'templates') {
+    return <TemplatesPage onBack={() => setView('report')} />
   }
 
   /** Финальный scale: fitScale * zoom(%) */
@@ -148,65 +96,16 @@ function App() {
         selectedId={selectedVersion}
         onSelect={setSelectedVersion}
         onExportPdf={handleExportPdf}
+        onOpenTemplates={() => setView('templates')}
         currentSlide={currentSlide}
         totalSlides={totalSlides}
       />
 
-      <SlideWrapper scale={scale} slideIndex={0}>
-        <CoverSlide
-          title="Watch Media"
-          period="Dec 2025 – Feb 2026"
-          website="www.watch360.ai"
-        />
-      </SlideWrapper>
-
-      <SlideWrapper scale={scale} slideIndex={1}>
-        <SectionCoverSlide
-          titleLine1="Shaping Visibility"
-          titleLine2="in the Age of AI"
-          category="Watch Media"
-          period="Dec 2025 – Feb 2026"
-          website="www.watch360.ai"
-        />
-      </SlideWrapper>
-
-      <SlideWrapper scale={scale} slideIndex={2}>
-        <TableSlide
-          titleLines={['Top Sources ', 'Used by AI']}
-          subtitle="Information sources used by AI models for diver watch recommendations across price segments"
-          rows={MOCK_TABLE_ROWS}
-          insights={MOCK_INSIGHTS}
-          footerRight="www.watch360.ai"
-        />
-      </SlideWrapper>
-
-      <SlideWrapper scale={scale} slideIndex={3}>
-        <WatchReferencesSlide
-          watches={MOCK_WATCHES}
-          footerRight="www.watch360.ai"
-        />
-      </SlideWrapper>
-
-      {/* Slide 05 — Quote 1 */}
-      <SlideWrapper scale={scale} slideIndex={4}>
-        <QuoteSlide
-          quote="“AI doesn’t just recommend watches — it defines which brands exist in the consumer’s reality.”"
-          author="ChatGPT"
-          authorDescription="AI Model, OpenAI"
-          footerRight="www.watch360.ai"
-        />
-      </SlideWrapper>
-
-      {/* Slide 06 — Quote 2 */}
-      <SlideWrapper scale={scale} slideIndex={5}>
-        <QuoteSlide
-          quote="“The watch that earns the most media attention is not always the one on the most wrists — it’s the one in the most conversations.”"
-          author="Claude"
-          authorDescription="AI Model, Anthropic"
-          backgroundImage={quotesImg2}
-          footerRight="www.watch360.ai"
-        />
-      </SlideWrapper>
+      {SLIDE_TEMPLATES.map((t, i) => (
+        <SlideWrapper key={t.id} scale={scale} slideIndex={i}>
+          {t.element}
+        </SlideWrapper>
+      ))}
 
       {/* Zoom control — bottom right */}
       <ZoomSlider zoom={zoom} onChange={setZoom} />

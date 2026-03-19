@@ -16,6 +16,7 @@ interface ToolbarProps {
   selectedId: string
   onSelect: (id: string) => void
   onExportPdf: () => void
+  onOpenTemplates?: () => void
   /** Текущий слайд / общее количество */
   currentSlide: number
   totalSlides: number
@@ -33,6 +34,7 @@ export function Toolbar({
   selectedId,
   onSelect,
   onExportPdf,
+  onOpenTemplates,
   currentSlide,
   totalSlides,
 }: ToolbarProps) {
@@ -232,6 +234,38 @@ export function Toolbar({
             </div>
           )}
         </div>
+
+        {/* Templates */}
+        {onOpenTemplates && (
+          <button
+            onClick={onOpenTemplates}
+            style={{
+              background: 'rgba(255,255,255,0.06)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 8,
+              padding: '8px 14px',
+              cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif',
+              fontSize: 12,
+              fontWeight: 400,
+              color: 'rgba(255,255,255,0.7)',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
+            }}
+          >
+            Templates
+          </button>
+        )}
 
         {/* Export PDF */}
         <button
