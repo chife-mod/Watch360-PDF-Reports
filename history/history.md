@@ -367,9 +367,115 @@ public/                       ← Vite static serving
 
 ---
 
+## 2026-03-19 — Layout-обновления + Templates page + архитектурный рефактор
+
+### ✅ Сделано
+
+#### Layout-обновления слайдов (по Figma)
+
+- [x] **TableSlide** (Figma 2-6):
+  - Заголовок: 40px → 32px, single-line, top: 32 → 24
+  - Таблица: top: 142 → 88 (отступ 32px от заголовка)
+  - Subtitle: top: 156 → 104
+  - Количество строк: 8 → 10
+- [x] **CoverSlide** (Figma 4-802):
+  - Заголовок: 48px → 40px
+  - Позиция: top: 340 → 344 (центрирование между иллюстрацией и футером)
+- [x] **WatchReferencesSlide**:
+  - Заголовок: 40px → 32px, top: 32 → 24 (как у TableSlide)
+- [x] **QuoteSlide — слайд 05**:
+  - Добавлен второй QuoteSlide в отчёт (цитата Claude, фон `2.webp`)
+
+#### Новый слайд: SectionCoverSlide (Back Cover)
+
+- [x] `src/components/slides/SectionCoverSlide.tsx` — Figma node 30-4507
+  - Та же иллюстрация и логотип, что у обложки
+  - Заголовок: 25px Inter, две строки, top: 336
+  - Footer left: категория + период, 10px, opacity 50% (серый)
+  - Footer right: website, 10px, opacity 50%
+  - Пример: "Shaping Visibility / in the Age of AI"
+
+#### Удаление `public/` — архитектурный фикс
+
+- [x] Все ассеты перенесены из `public/` в `assets/` (ES-импорты)
+- [x] `public/` **удалена полностью**
+- [x] Все строковые пути (`'/images/...'`) заменены на `import img from '...'`
+- [x] Файлы затронуты: `Header.tsx`, `CoverSlide.tsx`, `TableSlide.tsx`, `App.tsx`
+- [x] Конвертация: `assets/images/2.png` → `assets/images/2.webp` (cwebp -q 80, 134KB)
+
+**Почему:** в Vite есть два способа работы с файлами. `public/` + строковые пути — простой, но файлы не обрабатываются сборщиком. `assets/` + ES-импорты — правильный: Vite хеширует, оптимизирует, tree-shakes. Первая сессия использовала `public/` — это была ошибка, исправлена.
+
+#### Templates page — библиотека шаблонов
+
+- [x] `src/app/templateRegistry.tsx` — **единый реестр** всех шаблонов
+  - `SLIDE_TEMPLATES[]` — уникальные типы (для Templates page)
+  - `REPORT_SLIDES[]` — конкретные слайды в отчёте (могут повторять типы с разными данными)
+  - Моковые данные вынесены из `App.tsx` сюда — **один источник истины**
+  - Изменил компонент → обновился и в отчёте, и в темплейтах
+
+- [x] `src/app/TemplatesPage.tsx` — страница библиотеки шаблонов
+  - **List view**: полноразмерные слайды вертикально, с подписями (номер + имя + тег + описание)
+  - **Grid view**: миниатюры (38% scale), фильтрация по тегам
+  - Toggle List / Grid в top bar
+  - Sticky header с backdrop-blur
+  - Кнопка "← Back to Report"
+
+- [x] Теги: `Cover`, `Table`, `Models`, `Quote`
+  - Watch Models помечен как `['Table', 'Models']` (показывается в обоих фильтрах)
+  - Один шаблон Quote (не дублируем одинаковые типы)
+
+- [x] `Toolbar.tsx` — добавлена кнопка **Templates** (рядом с дропдауном)
+- [x] `App.tsx` — переключение `view: 'report' | 'templates'`
+  - `REPORT_SLIDES` для отчёта, `SLIDE_TEMPLATES` для Templates page
+  - Никакого роутера — просто state
+
+#### Мелкие фиксы
+- [x] ListView: gap 40 → 80px между блоками (слайды не слипаются)
+- [x] ListView: подписи top: -12 → -28px (не залезают на слайды)
+- [x] Section Cover → Back Cover (название + описание)
+
+### Структура ассетов (текущая)
+
+```
+assets/
+├── logos/Logo_Top_On_Dark.svg     ← ES-import в Header.tsx
+├── images/
+│   ├── Cover_Image.webp           ← CoverSlide, SectionCoverSlide
+│   ├── Quotes_Image_1.webp        ← QuoteSlide (default)
+│   ├── 2.webp                     ← QuoteSlide (slide 06)
+│   ├── Watch 1.webp               ← WatchReferencesSlide placeholder
+│   ├── 1.png, 2.png, Cover_Image.png, Quotes_Image_1.png, Quotes_Image_2.png  ← оригиналы
+│   └── Watch 1.png                ← оригинал
+├── icons/tabler_bulb.svg          ← ES-import в TableSlide.tsx
+└── fonts/                         ← пока пусто
+```
+
+> ⚠️ Папки `public/` больше нет. Все ассеты через ES-импорты из `assets/`.
+
+### Архитектурные решения
+
+- **templateRegistry** — реестр = единый источник данных и компонентов. Report и Templates берут из него. Не дублируем.
+- **SLIDE_TEMPLATES vs REPORT_SLIDES** — в темплейтах только уникальные типы (5 шт.), в отчёте конкретный набор с конкретными данными (6 слайдов, два Quote с разными картинками)
+- **Templates без роутера** — `useState<'report' | 'templates'>` в App.tsx. Пока не нужен react-router.
+- **Back Cover** — не Section Divider. Это задняя обложка, последний слайд раздела.
+
+---
+
+## Текущий состав слайдов отчёта
+
+| # | Слайд | Компонент |
+|---|-------|-----------|
+| 01 | Cover — "Watch Media" | CoverSlide |
+| 02 | Back Cover — "Shaping Visibility in the Age of AI" | SectionCoverSlide |
+| 03 | Top Sources Table | TableSlide |
+| 04 | Watch References | WatchReferencesSlide |
+| 05 | Quote — ChatGPT | QuoteSlide |
+| 06 | Quote — Claude | QuoteSlide (другая картинка) |
+
+---
+
 ## Приоритет следующего шага
 
 1. **Google Sheets API** — подключение данных (`src/data/`)
 2. **Puppeteer** — PDF экспорт (`src/lib/pdf.ts`)
 3. **Дополнительные слайды** — по мере появления в Figma
-
