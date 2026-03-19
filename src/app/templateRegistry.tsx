@@ -7,7 +7,7 @@ import { QuoteSlide } from '../components/slides/QuoteSlide'
 import watchImg from '../../assets/images/Watch 1.webp'
 import quotesImg2 from '../../assets/images/2.webp'
 
-export type SlideTag = 'All' | 'Cover' | 'Table' | 'Quote' | 'References'
+export type SlideTag = 'All' | 'Cover' | 'Table' | 'Quote' | 'Models'
 
 export interface SlideTemplate {
   id: string
@@ -99,9 +99,9 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
     ),
   },
   {
-    id: 'watch-references',
-    name: 'Watch References',
-    tags: ['References'],
+    id: 'watch-models',
+    name: 'Watch Models',
+    tags: ['Models'],
     element: (
       <WatchReferencesSlide
         watches={MOCK_WATCHES}
@@ -110,8 +110,8 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
     ),
   },
   {
-    id: 'quote-1',
-    name: 'Quote — ChatGPT',
+    id: 'quote',
+    name: 'Quote',
     tags: ['Quote'],
     element: (
       <QuoteSlide
@@ -122,10 +122,69 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
       />
     ),
   },
+]
+
+/**
+ * REPORT_SLIDES — порядок слайдов в отчёте.
+ * Здесь можно использовать любые темплейты с другими данными/пропсами.
+ */
+export const REPORT_SLIDES: { id: string; element: React.ReactElement }[] = [
   {
-    id: 'quote-2',
-    name: 'Quote — Claude',
-    tags: ['Quote'],
+    id: 'report-cover',
+    element: (
+      <CoverSlide
+        title="Watch Media"
+        period="Dec 2025 – Feb 2026"
+        website="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'report-section-cover',
+    element: (
+      <SectionCoverSlide
+        titleLine1="Shaping Visibility"
+        titleLine2="in the Age of AI"
+        category="Watch Media"
+        period="Dec 2025 – Feb 2026"
+        website="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'report-table',
+    element: (
+      <TableSlide
+        titleLines={['Top Sources ', 'Used by AI']}
+        subtitle="Information sources used by AI models for diver watch recommendations across price segments"
+        rows={MOCK_ROWS}
+        insights={MOCK_INSIGHTS}
+        footerRight="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'report-watch-models',
+    element: (
+      <WatchReferencesSlide
+        watches={MOCK_WATCHES}
+        footerRight="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'report-quote-1',
+    element: (
+      <QuoteSlide
+        quote="\u201cAI doesn\u2019t just recommend watches \u2014 it defines which brands exist in the consumer\u2019s reality.\u201d"
+        author="ChatGPT"
+        authorDescription="AI Model, OpenAI"
+        footerRight="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'report-quote-2',
     element: (
       <QuoteSlide
         quote="\u201cThe watch that earns the most media attention is not always the one on the most wrists \u2014 it\u2019s the one in the most conversations.\u201d"
@@ -138,4 +197,4 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
   },
 ]
 
-export const ALL_TAGS: SlideTag[] = ['All', 'Cover', 'Table', 'References', 'Quote']
+export const ALL_TAGS: SlideTag[] = ['All', 'Cover', 'Table', 'Models', 'Quote']

@@ -15,9 +15,8 @@ const DESCRIPTIONS: Record<string, string> = {
   'cover': 'Main report cover — title, period, illustration',
   'section-cover': 'Section divider — subtitle, category, illustration',
   'table': 'Top Sources table — 10 rows, insights panel, occurrence bars',
-  'watch-references': 'Watch model cards — image, specs, metrics',
-  'quote-1': 'Full-bleed quote — photo background, attribution',
-  'quote-2': 'Full-bleed quote — alternate photo, attribution',
+  'watch-models': 'Watch model cards — image, specs, metrics',
+  'quote': 'Full-bleed quote — photo background, attribution',
 }
 
 export function TemplatesPage({ onBack }: { onBack: () => void }) {

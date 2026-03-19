@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Toolbar, type ReportVersion } from './app/Toolbar'
 import { TemplatesPage } from './app/TemplatesPage'
-import { SLIDE_TEMPLATES } from './app/templateRegistry'
+import { REPORT_SLIDES } from './app/templateRegistry'
 
 /* ── Mock data ────────────────────────────────────────────── */
 
@@ -39,7 +39,7 @@ function App() {
     calcFitScale(window.innerWidth, window.innerHeight),
   )
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = SLIDE_TEMPLATES.length
+  const totalSlides = REPORT_SLIDES.length
 
   useEffect(() => {
     const onResize = () =>
@@ -101,7 +101,7 @@ function App() {
         totalSlides={totalSlides}
       />
 
-      {SLIDE_TEMPLATES.map((t, i) => (
+      {REPORT_SLIDES.map((t, i) => (
         <SlideWrapper key={t.id} scale={scale} slideIndex={i}>
           {t.element}
         </SlideWrapper>
