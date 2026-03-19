@@ -20,7 +20,7 @@ export interface CoverSlideProps {
  * Структура (720×450px):
  *   - Header: единый логотип Watch360 top-right (top: 25, right: 32)
  *   - Cover image: абстрактная иллюстрация (top: 72, h: 242, full width)
- *   - Title: 48px Inter Regular, left: 32, top: calc(50% + 115px) ≈ 340
+ *   - Title: 40px Inter Regular, left: 32, top: calc(50% + 119px) ≈ 344
  *   - Footer: период слева (left: 35, top: calc(50%+183px) ≈ 408) + сайт справа (50% opacity)
  *
  * Figma: node 4-802, file V8XA0PVaAjxvPbq24stJXk
@@ -54,11 +54,11 @@ export function CoverSlide({
       <h1
         style={{
           position: 'absolute',
-          top: 340,
+          top: 344,
           left: 32,
           margin: 0,
           fontFamily: 'Inter, sans-serif',
-          fontSize: 48,
+          fontSize: 40,
           fontWeight: 400,
           color: 'white',
           lineHeight: 1,
