@@ -23,6 +23,8 @@ const MOCK_TABLE_ROWS = [
   { rank: 6, domain: 'chrono24.com', type: 'Marketplace', occurrence: 56 },
   { rank: 7, domain: 'monochrome-watches.com', type: 'Watch Media', occurrence: 47 },
   { rank: 8, domain: 'omegawatches.com', type: 'Watch Media', occurrence: 11 },
+  { rank: 9, domain: 'ablogtowatch.com', type: 'Watch Media', occurrence: 9 },
+  { rank: 10, domain: 'fratellowatches.com', type: 'Watch Media', occurrence: 7 },
 ]
 
 const MOCK_INSIGHTS = [
@@ -158,7 +160,7 @@ function App() {
 
       <SlideWrapper scale={scale} slideIndex={1}>
         <TableSlide
-          titleLines={['Top Sources', 'Used by AI']}
+          titleLines={['Top Sources ', 'Used by AI']}
           subtitle="Information sources used by AI models for diver watch recommendations across price segments"
           rows={MOCK_TABLE_ROWS}
           insights={MOCK_INSIGHTS}

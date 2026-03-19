@@ -18,7 +18,7 @@ export interface InsightItem {
 }
 
 export interface TableSlideProps {
-  /** Заголовок (первая строка — акцентная teal). Пример: ["Top Sources", "Used by AI"] */
+  /** Заголовок — в одну строку: первое слово teal, второе белое. Пример: ["Top Sources ", "Used by AI"] */
   titleLines: [string, string]
   /** Описание справа от заголовка */
   subtitle?: string
@@ -39,10 +39,10 @@ export interface TableSlideProps {
  *
  * Layout (720×450px):
  *   Left column (437px):
- *     - Title: 40px, две строки (первая — #00C3D9, вторая — white)
- *     - Table: Rank | Domain | Type (dot + label) | Occurrence (number + bar)
+ *     - Title: 32px, одна строка inline (первая часть teal, вторая white), top: 24, left: 32
+ *     - Table: Rank | Domain | Type (dot + label) | Occurrence (number + bar), top: 88
  *   Right column (183px):
- *     - Subtitle: описание, 10px, 50% opacity
+ *     - Subtitle: описание, 10px, 50% opacity, top: 104
  *     - Insights: иконка bulb + нумерованный список
  *   Header: логотип top-right
  *   Footer: период + сайт
@@ -62,30 +62,30 @@ export function TableSlide({
     <SlideFrame>
       <Header />
 
-      {/* ── Title (left, top: 32) ── */}
-      <div
+      {/* ── Title (left, top: 24) ── */}
+      <p
         style={{
           position: 'absolute',
-          top: 32,
+          top: 24,
           left: 32,
           width: 437,
+          margin: 0,
           fontFamily: 'Inter, sans-serif',
-          fontSize: 40,
+          fontSize: 32,
           fontWeight: 400,
           lineHeight: 1,
         }}
       >
         <span style={{ color: '#00C3D9' }}>{titleLines[0]}</span>
-        <br />
         <span style={{ color: 'white' }}>{titleLines[1]}</span>
-      </div>
+      </p>
 
-      {/* ── Subtitle (right column, top: 105) ── */}
+      {/* ── Subtitle (right column, top: 104) ── */}
       {subtitle && (
         <p
           style={{
             position: 'absolute',
-            top: 156,
+            top: 104,
             left: 505,
             width: 183,
             margin: 0,
@@ -101,11 +101,11 @@ export function TableSlide({
         </p>
       )}
 
-      {/* ── Table (left: 32, top: 142, width: 437) ── */}
+      {/* ── Table (left: 32, top: 88, width: 437) ── */}
       <div
         style={{
           position: 'absolute',
-          top: 142,
+          top: 88,
           left: 32,
           width: 437,
           display: 'flex',
