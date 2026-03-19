@@ -13,7 +13,7 @@ function calcFitScale(vw: number) {
 /** Описания для list-view */
 const DESCRIPTIONS: Record<string, string> = {
   'cover': 'Main report cover — title, period, illustration',
-  'section-cover': 'Section divider — subtitle, category, illustration',
+  'section-cover': 'Back cover — closing slide with subtitle and category',
   'table': 'Top Sources table — 10 rows, insights panel, occurrence bars',
   'watch-models': 'Watch model cards — image, specs, metrics',
   'quote': 'Full-bleed quote — photo background, attribution',
@@ -322,7 +322,7 @@ function ListView({
           <div
             style={{
               position: 'absolute',
-              top: -12,
+              top: -28,
               left: 0,
               display: 'flex',
               gap: 6,

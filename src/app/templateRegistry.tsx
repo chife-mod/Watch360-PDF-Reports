@@ -72,7 +72,7 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
   },
   {
     id: 'section-cover',
-    name: 'Section Cover',
+    name: 'Back Cover',
     tags: ['Cover'],
     element: (
       <SectionCoverSlide
