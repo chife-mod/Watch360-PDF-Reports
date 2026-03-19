@@ -5,6 +5,7 @@ import { TableSlide } from './components/slides/TableSlide'
 import { WatchReferencesSlide } from './components/slides/WatchReferencesSlide'
 import { QuoteSlide } from './components/slides/QuoteSlide'
 import watchImg from '../assets/images/Watch 1.png'
+import quotesImg2 from '../assets/images/Quotes_Image_2.webp'
 
 /* ── Mock data ────────────────────────────────────────────── */
 
@@ -94,7 +95,7 @@ function App() {
     calcFitScale(window.innerWidth, window.innerHeight),
   )
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 4
+  const totalSlides = 5
 
   useEffect(() => {
     const onResize = () =>
@@ -175,12 +176,23 @@ function App() {
         />
       </SlideWrapper>
 
-      {/* Slide 04 — Quote */}
+      {/* Slide 04 — Quote 1 */}
       <SlideWrapper scale={scale} slideIndex={3}>
         <QuoteSlide
-          quote={"“AI doesn’t just recommend watches — it defines which brands exist in the consumer’s reality.”"}
+          quote="“AI doesn’t just recommend watches — it defines which brands exist in the consumer’s reality.”"
           author="ChatGPT"
           authorDescription="AI Model, OpenAI"
+          footerRight="www.watch360.ai"
+        />
+      </SlideWrapper>
+
+      {/* Slide 05 — Quote 2 */}
+      <SlideWrapper scale={scale} slideIndex={4}>
+        <QuoteSlide
+          quote="“The watch that earns the most media attention is not always the one on the most wrists — it’s the one in the most conversations.”"
+          author="Claude"
+          authorDescription="AI Model, Anthropic"
+          backgroundImage={quotesImg2}
           footerRight="www.watch360.ai"
         />
       </SlideWrapper>
