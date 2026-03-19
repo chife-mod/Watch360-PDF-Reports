@@ -312,7 +312,7 @@ function ListView({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 40,
+        gap: 80,
         padding: '40px 0 80px',
       }}
     >
