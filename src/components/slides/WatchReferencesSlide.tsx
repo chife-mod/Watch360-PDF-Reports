@@ -58,11 +58,11 @@ export function WatchReferencesSlide({
       <div
         style={{
           position: 'absolute',
-          top: 32,
+          top: 24,
           left: 32,
           width: 437,
           fontFamily: 'Inter, sans-serif',
-          fontSize: 40,
+          fontSize: 32,
           fontWeight: 400,
           lineHeight: 1,
           color: 'white',
