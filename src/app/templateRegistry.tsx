@@ -101,7 +101,7 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
   {
     id: 'watch-models',
     name: 'Watch Models',
-    tags: ['Models'],
+    tags: ['Table', 'Models'],
     element: (
       <WatchReferencesSlide
         watches={MOCK_WATCHES}
