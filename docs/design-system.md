@@ -91,9 +91,21 @@ const unknown = getCategoryColor('Unknown Type')
 1. **Не использовать:** glassmorphism, card shadows, border-radius на карточках, градиенты на тексте
 2. **Иерархия** = font-size + opacity. Не добавлять цветовое разнообразие
 3. **Максимум whitespace**
-4. **Таблицы:** только `border-top: 0.5px solid rgba(255,255,255,0.15)` между строками, заголовок без рамки
-5. **Бейджи типов:** dot (5px solid + 9px muted background) + label (50% opacity)
-6. **Occurrence bars:** высота 4px, скругление 500px, фон `rgba(255,255,255,0.1)`, заполнение — цвет категории
+4. **Таблицы:** только `border-top: 0.5px solid rgba(255,255,255,0.15)` между строками; заголовок — `border-bottom: 0.5px solid #808080`, `paddingBottom: 6`, `alignItems: 'flex-end'`. Этот стандарт применяется во **всех** слайдах с таблицами без исключения.
+5. **Теги (бейджи) брендов:** текст всегда `#FFFFFF`, фон `rgba(255,255,255,0.12)`.  
+6. **Выравнивание в таблицах:** Крайний правый столбец (Dial Color) — `flex: 1` + `justifyContent: 'flex-end'`. Все остальные колонки — левое выравнивание. Все ячейки используют `boxSizing: 'border-box'`.
+7. **Bar Chart с числами:** Порядок строго `[Бар-чарт] -> [Число]`. Число размещается справа от чарта с выключкой по правому краю и НЕ меняет цвет (только для топ-1 `colors.accent.teal`). Высота бара 3px, скругление 500px, фон `rgba(255,255,255,0.08)`.
+8. **Rank #1 highlight (обязательно для всех таблиц с рангами):**
+   - Ранг: `fontWeight: 700`, `color: colors.accent.teal`, `opacity: 1`
+   - Название (source / brand / etc.): `color: colors.accent.teal`
+   - Числовое значение (articles qty): `color: colors.accent.teal`
+   - Бар-чарт: `background: colors.accent.teal`
+   - Остальные строки: ранг `opacity: 0.5`, текст `#FFFFFF`, бар `rgba(255,255,255,0.75)`
+9. **Дата запуска модели (LaunchDate):** ВСЕГДА использовать компонент `src/components/ui/LaunchDate.tsx`. Канонический формат: `Launch • Dec, 2025`
+   - «Launch» — с заглавной буквы, `textTransform: 'uppercase'`, 50% opacity, 7px, tracking 0.14px
+   - «•» — круглая точка 2×2px, 50% opacity, gap 4px слева и справа
+   - Дата: 3-буквенный месяц с заглавной (Jan, Feb…), запятая, год. НЕ капс.
+   - Компонент автоматически нормализует входящую строку из любого формата.
 
 ---
 

@@ -36,7 +36,7 @@ export const FEB_2026_SOURCES: SourceRow[] = [
   { rank: 4,  domain: 'webchronos.net',           flag: '🇯🇵', country: 'Japan',           articles: 459 },
   { rank: 5,  domain: 'waqt.com',                flag: '🇦🇪', country: 'UAE',             articles: 416 },
   { rank: 6,  domain: 'watchpro.com',            flag: '🇬🇧', country: 'United Kingdom',  articles: 307 },
-  { rank: 7,  domain: 'iwatchhome.net',          flag: '🇨🇳', country: 'China',           articles: 300 },
+  { rank: 7,  domain: 'iwatchome.net',           flag: '🇨🇳', country: 'China',           articles: 300 },
   { rank: 8,  domain: 'monochrome-watches.com',  flag: '🇳🇱', country: 'Netherlands',     articles: 296 },
   { rank: 9,  domain: 'montres-de-luxe.com',     flag: '🇫🇷', country: 'France',          articles: 275 },
   { rank: 10, domain: 'hiconsumption.com',       flag: '🇺🇸', country: 'USA',             articles: 262 },

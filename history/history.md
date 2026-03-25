@@ -2,6 +2,42 @@
 
 ---
 
+## 2026-03-25 — Слайд Top Watch References [6-15] + дизайн-система
+
+### ✅ Сделано
+
+#### Новый компонент `TopModelsTableSlide.tsx`
+- Система колонок: `rank(50) + model(140) + brand(78) + articles(56) + sources(56) + countries(60) + price(84) + case(56) + dial(flex)`.
+- Все ячейки: левое выравнивание, `flexShrink:0`, `boxSizing:border-box`. Только dial: `flex:1 + justifyContent:flex-end`.
+- Заголовок: `Top Watch References` (белый) + `[6-15]` (teal). Таблица на `top:88`.
+- `paddingLeft:8` на колонке Model — гарантированный отступ 8px от миниатюры.
+- Dial Color dot: внешнее кольцо авто-генерируется как `dialColorHex + 26` (15% opacity).
+- Footer с `www.watch360.ai`.
+
+#### Реальные данные #6–15 из Excel
+- Строки 6–15 из листа «6. Top 50 Models»: Seiko KS1969, Omega Speedmaster (×2), Longines Year of the Horse, IWC George Russell (×2), MB&F LM EVO, Patek Nautilus 5711, Seiko Presage SPB538, Panerai PAM00382.
+
+#### `src/components/ui/LaunchDate.tsx`
+- Единый компонент: `LAUNCH • Dec, 2025`. Месяц — 3 буквы с заглавной (не капс). Авто-нормализация входящего формата.
+- Применён в `WatchReferencesSlide` и `TopModelsTableSlide`.
+
+#### Унификация хедеров таблиц
+- Все слайды с таблицами: `borderBottom: 0.5px solid #808080`, `paddingBottom:6`, `alignItems:flex-end`.
+- Правило зафиксировано в `docs/design-system.md` (п. 4, новый п. 9).
+
+### 🔲 Следующее
+- Скачать фронтальные фото для моделей #6–15 и подключить к слайду.
+- Создать `Top Watch References [16-25]`.
+
+---
+
+## 2026-03-25 — Архитектурный концепт и Product Vision
+
+### ✅ Сделано
+- Создан документ `docs/product-concept.md`, описывающий конечную цель проекта: создание максимально автономной системы (Google Sheets + Templates = PDF).
+- В `docs/product-concept.md` зафиксирована механика работы: маппинг страниц таблицы на готовые React-шаблоны, интерфейс с версионностью (последний репорт по умолчанию, остальные через dropdown) и пополнение библиотеки темплейтов (как абсолютов).
+- Обновлен `AGENTS.md`: добавлена ссылка на `docs/product-concept.md` для быстрого погружения новых агентов.
+
 ## 2026-03-25 — Финализация визуальной части слайдов отчёта
 
 ### ✅ Сделано

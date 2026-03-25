@@ -1,6 +1,9 @@
 import { Header } from '../ui/Header'
+import { BrandTag } from '../ui/BrandTag'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
+import { LaunchDate } from '../ui/LaunchDate'
+import { colors } from '../../theme/colors'
 
 export interface WatchReference {
   /** URL картинки часов */
@@ -11,23 +14,29 @@ export interface WatchReference {
   model: string
   /** Дата запуска */
   launchDate?: string
-  /** Количество упоминаний */
-  mentions: number
+  /** Количество статей (Articles) */
+  articles: number
   /** Количество источников */
   sources: number
   /** Количество стран */
   countries: number
   /** Ценовой диапазон */
   priceRange: string
-  /** Цвет циферблата (текст) */
+  /** Материал корпуса */
+  caseMaterial?: string
+  /** Цвет циферблата (текст - больше не показывается, но нужен) */
   dialColor: string
   /** Цвет циферблата (hex для dot) */
   dialColorHex: string
+  /** Цвет обводки циферблата (опционально) */
+  dialColorWrapperHex?: string
 }
 
 export interface WatchReferencesSlideProps {
   /** Заголовок слайда */
   title?: string
+  /** Цветной суффикс заголовка (например "[1-5]") */
+  titleHighlight?: string
   /** Данные часов */
   watches: WatchReference[]
   /** Правая часть футера */
@@ -46,6 +55,7 @@ export interface WatchReferencesSlideProps {
  */
 export function WatchReferencesSlide({
   title = 'Watch References',
+  titleHighlight,
   watches,
   footerRight = 'www.watch360.ai',
   footerRightUrl = 'https://watch360.ai',
@@ -68,7 +78,13 @@ export function WatchReferencesSlide({
           color: 'white',
         }}
       >
-        {title}
+        <span style={{ lineHeight: 1 }}>{title}</span>
+        {titleHighlight && (
+          <span style={{ lineHeight: 1, color: '#00c3d9' }}>
+            {' '}
+            {titleHighlight}
+          </span>
+        )}
       </div>
 
       {/* ── Table ── */}
@@ -83,15 +99,23 @@ export function WatchReferencesSlide({
         }}
       >
         {/* Table Header */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {/* Empty space for image column */}
-          <div style={{ width: 72, height: 19, paddingBottom: 8, flexShrink: 0 }} />
-          <div style={{ ...hdrStyle, width: 194 }}>Model</div>
-          <div style={{ ...hdrStyle, width: 65 }}>Mentions</div>
-          <div style={{ ...hdrStyle, width: 65 }}>Sources</div>
-          <div style={{ ...hdrStyle, width: 65 }}>Countries</div>
-          <div style={{ ...hdrStyle, width: 110 }}>Price Range</div>
-          <div style={{ ...hdrStyle, flex: 1, textAlign: 'right' }}>Dial Color</div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            borderBottom: `0.5px solid ${colors.border}`,
+            paddingBottom: 6,
+            boxSizing: 'border-box',
+          }}
+        >
+          <div style={{ ...hdrStyle, width: 81 }}>Rank</div>
+          <div style={{ ...hdrStyle, width: 186 }}>Model</div>
+          <div style={{ ...hdrStyle, width: 57 }}>Articles</div>
+          <div style={{ ...hdrStyle, width: 57 }}>Sources</div>
+          <div style={{ ...hdrStyle, width: 57 }}>Countries</div>
+          <div style={{ ...hdrStyle, width: 108 }}>Price Range</div>
+          <div style={{ ...hdrStyle, flex: 1 }}>Case Material</div>
+          <div style={{ ...hdrStyle, width: 50.5, textAlign: 'right', justifyContent: 'flex-end', display: 'flex' }}>Dial Color</div>
         </div>
 
         {/* Rows */}
@@ -101,15 +125,32 @@ export function WatchReferencesSlide({
             style={{
               display: 'flex',
               alignItems: 'center',
+              height: 62,
               borderTop: '0.5px solid rgba(255,255,255,0.15)',
+              boxSizing: 'border-box',
             }}
           >
+            {/* Rank */}
+            <div
+              style={{
+                width: 19,
+                fontFamily: 'Inter, sans-serif',
+                fontSize: 10,
+                fontWeight: 700,
+                color: i === 0 ? '#00c3d9' : 'white',
+                lineHeight: 1.5,
+                flexShrink: 0,
+              }}
+            >
+              {i + 1}
+            </div>
+
             {/* Watch image */}
-            <div style={{ padding: '8px 16px 8px 0', flexShrink: 0 }}>
+            <div style={{ paddingRight: 8, flexShrink: 0 }}>
               <div
                 style={{
-                  width: 56,
-                  height: 56,
+                  width: 54,
+                  height: 54,
                   borderRadius: 16,
                   border: '0.5px solid rgba(255,255,255,0.24)',
                   overflow: 'hidden',
@@ -136,48 +177,15 @@ export function WatchReferencesSlide({
             {/* Model info */}
             <div
               style={{
-                width: 194,
+                width: 186,
                 paddingRight: 16,
-                paddingTop: 4,
-                paddingBottom: 8,
                 display: 'flex',
-                flexDirection: 'column',
-                gap: 4,
-                justifyContent: 'center',
-                alignSelf: 'stretch',
+                alignItems: 'center',
+                height: '100%',
                 flexShrink: 0,
               }}
             >
-              {/* Brand badge */}
               <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '2px 8px',
-                  backgroundColor: 'rgba(255,255,255,0.12)',
-                  alignSelf: 'flex-start',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: 7,
-                    fontWeight: 400,
-                    color: 'white',
-                    opacity: 0.7,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.14px',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {w.brand}
-                </span>
-              </div>
-              {/* Model name */}
-              <span
                 style={{
                   fontFamily: 'Inter, sans-serif',
                   fontSize: 10,
@@ -185,76 +193,59 @@ export function WatchReferencesSlide({
                   color: 'white',
                   lineHeight: 1.5,
                   whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
+                  overflow: 'visible', // allows absolutes to be visible
+                  width: '100%',
+                  position: 'relative',
                 }}
               >
-                {w.model}
-              </span>
-              {/* Launch date */}
-              {w.launchDate && (
-                <span
-                  style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: 7,
-                    fontWeight: 400,
-                    color: 'white',
-                    opacity: 0.5,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.14px',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {w.launchDate}
-                </span>
-              )}
+                {/* Brand badge - absolutely positioned relative to Model baseline */}
+                <div style={{ position: 'absolute', bottom: '100%', left: 0, marginBottom: 2 }}>
+                  <BrandTag label={w.brand} />
+                </div>
+
+                <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {w.model}
+                </div>
+
+                {/* Launch date / Novelties - absolutely positioned below relative to Model text bottom */}
+                {w.launchDate && (
+                  <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: 2 }}>
+                    <LaunchDate date={w.launchDate} />
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Mentions */}
-            <div style={{ ...cellStyle, width: 65 }}>{w.mentions}</div>
+            {/* Articles */}
+            <div style={{ ...cellStyle, width: 57 }}>{w.articles}</div>
 
             {/* Sources */}
-            <div style={{ ...cellStyle, width: 65 }}>{w.sources}</div>
+            <div style={{ ...cellStyle, width: 57 }}>{w.sources}</div>
 
             {/* Countries */}
-            <div style={{ ...cellStyle, width: 65 }}>{w.countries}</div>
+            <div style={{ ...cellStyle, width: 57 }}>{w.countries}</div>
 
             {/* Price Range */}
-            <div style={{ ...cellStyle, width: 110 }}>{w.priceRange}</div>
+            <div style={{ ...cellStyle, width: 108 }}>{w.priceRange}</div>
 
-            {/* Dial Color */}
+            {/* Case Material */}
+            <div style={{ ...cellStyle, flex: 1 }}>{w.caseMaterial || 'Steel'}</div>
+
+            {/* Dial Color dot */}
             <div
               style={{
-                flex: 1,
+                width: 50.5,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-end',
-                gap: 12,
-                padding: '3px 0',
                 alignSelf: 'stretch',
               }}
             >
-              <span
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: 10,
-                  fontWeight: 400,
-                  color: 'white',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                }}
-              >
-                {w.dialColor}
-              </span>
-              {/* Color dot */}
               <div
                 style={{
-                  width: 20,
-                  height: 20,
+                  padding: 4,
                   borderRadius: 500,
-                  backgroundColor: `${w.dialColorHex}33`,
+                  backgroundColor: w.dialColorWrapperHex || `${w.dialColorHex}33`, // custom wrapper or 20% opacity
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -263,8 +254,8 @@ export function WatchReferencesSlide({
               >
                 <div
                   style={{
-                    width: 12,
-                    height: 12,
+                    width: 16,
+                    height: 16,
                     borderRadius: 1200,
                     backgroundColor: w.dialColorHex,
                   }}
@@ -282,7 +273,7 @@ export function WatchReferencesSlide({
 
 /** Table header cell style */
 const hdrStyle: React.CSSProperties = {
-  paddingBottom: 8,
+  paddingBottom: 0,
   fontFamily: 'Inter, sans-serif',
   fontSize: 7,
   fontWeight: 400,

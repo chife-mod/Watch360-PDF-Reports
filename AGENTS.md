@@ -12,6 +12,8 @@ Data comes from Google Sheets. Output: a vector PDF at **720×450px**, suitable 
 Includes a web interface for preview and download.
 Future: Remotion-compatible for animated slide exports.
 
+> **Read Next:** For the overarching autonomous pipeline (Data -> Templates -> PDF) and product vision, read [docs/product-concept.md](docs/product-concept.md).
+
 ---
 
 ## Product Philosophy

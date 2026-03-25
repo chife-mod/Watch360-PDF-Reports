@@ -118,7 +118,7 @@ export function TableSlide({
           <div style={{ ...headerCellStyle, width: 39 }}>Rank</div>
           <div style={{ ...headerCellStyle, width: 160 }}>Domain</div>
           <div style={{ ...headerCellStyle, width: 129 }}>Type</div>
-          <div style={{ ...headerCellStyle, flex: 1 }}>Occurrence</div>
+          <div style={{ ...headerCellStyle, flex: 1, textAlign: 'right' }}>Occurrence</div>
         </div>
 
         {/* Table Rows */}
@@ -185,7 +185,7 @@ export function TableSlide({
                 </div>
               </div>
 
-              {/* Occurrence: number + bar */}
+              {/* Occurrence: bar + number */}
               <div
                 style={{
                   ...cellStyle,
@@ -195,9 +195,6 @@ export function TableSlide({
                   gap: 4,
                 }}
               >
-                <span style={{ color: 'white', width: 21, flexShrink: 0 }}>
-                  {row.occurrence}
-                </span>
                 <div
                   style={{
                     flex: 1,
@@ -216,6 +213,9 @@ export function TableSlide({
                     }}
                   />
                 </div>
+                <span style={{ color: isFirst ? '#00C3D9' : 'white', width: 21, flexShrink: 0, textAlign: 'right' }}>
+                  {row.occurrence}
+                </span>
               </div>
             </div>
           )
