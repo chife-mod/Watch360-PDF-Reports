@@ -64,7 +64,8 @@ function App() {
   }, [view])
 
   const handleExportPdf = () => {
-    const printUrl = `${window.location.origin}/?pdf=all`
+    // window.location.pathname ensures it works in subdirectories like GitHub Pages
+    const printUrl = `${window.location.pathname}?pdf=all`
     const printWindow = window.open(printUrl, '_blank')
     if (printWindow) {
       printWindow.addEventListener('load', () => {
