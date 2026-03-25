@@ -4,10 +4,11 @@ import { SectionCoverSlide } from '../components/slides/SectionCoverSlide'
 import { TableSlide } from '../components/slides/TableSlide'
 import { WatchReferencesSlide } from '../components/slides/WatchReferencesSlide'
 import { QuoteSlide } from '../components/slides/QuoteSlide'
+import { CountriesSlide, DEFAULT_COUNTRIES, DEFAULT_MEDIA } from '../components/slides/CountriesSlide'
 import watchImg from '../../assets/images/Watch 1.webp'
 import quotesImg2 from '../../assets/images/2.webp'
 
-export type SlideTag = 'All' | 'Cover' | 'Table' | 'Quote' | 'Models'
+export type SlideTag = 'All' | 'Cover' | 'Table' | 'Quote' | 'Models' | 'Map'
 
 export interface SlideTemplate {
   id: string
@@ -118,6 +119,18 @@ export const SLIDE_TEMPLATES: SlideTemplate[] = [
         quote="\u201cAI doesn\u2019t just recommend watches \u2014 it defines which brands exist in the consumer\u2019s reality.\u201d"
         author="ChatGPT"
         authorDescription="AI Model, OpenAI"
+        footerRight="www.watch360.ai"
+      />
+    ),
+  },
+  {
+    id: 'countries',
+    name: 'Top Countries',
+    tags: ['Map', 'Table'],
+    element: (
+      <CountriesSlide
+        countries={DEFAULT_COUNTRIES}
+        mediaSamples={DEFAULT_MEDIA}
         footerRight="www.watch360.ai"
       />
     ),

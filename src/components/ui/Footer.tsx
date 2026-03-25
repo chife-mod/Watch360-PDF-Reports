@@ -12,14 +12,13 @@ interface FooterProps {
 /**
  * Footer — нижняя строка каждого слайда.
  * Слева: период (10px, white 100%) — опционально
- * Справа: категория/сайт (10px, white 50%)
- * Позиция: top: 408px (= calc(50% + 183px) при высоте 450px)
- * Figma nodes: 5:988, 22:2429
+ * Справа: домен/категория (10px, white 50%)
+ * Позиция: bottom: 16px от нижнего края слайда
  */
 export function Footer({ period, right, rightUrl }: FooterProps) {
   const baseStyle: React.CSSProperties = {
     position: 'absolute',
-    top: 408,
+    bottom: 16,
     fontFamily: 'Inter, sans-serif',
     fontSize: 10,
     fontWeight: 400,

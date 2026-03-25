@@ -1,15 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Toolbar, type ReportVersion } from './app/Toolbar'
+import { Toolbar } from './app/Toolbar'
 import { TemplatesPage } from './app/TemplatesPage'
-import { REPORT_SLIDES } from './app/templateRegistry'
-
-/* ── Mock data ────────────────────────────────────────────── */
-
-const MOCK_VERSIONS: ReportVersion[] = [
-  { id: '2026-03-18', date: '2026-03-18', title: 'Watch Media' },
-  { id: '2026-02-15', date: '2026-02-15', title: 'Watch Media' },
-  { id: '2026-01-12', date: '2026-01-12', title: 'Watch Media' },
-]
+import { REPORT_VERSIONS, getReport } from './reports'
 
 /* ── Constants ────────────────────────────────────────────── */
 
@@ -33,13 +25,16 @@ function calcFitScale(vw: number, vh: number) {
 
 function App() {
   const [view, setView] = useState<'report' | 'templates'>('report')
-  const [selectedVersion, setSelectedVersion] = useState(MOCK_VERSIONS[0].id)
+  const [selectedVersion, setSelectedVersion] = useState(REPORT_VERSIONS[0]?.id ?? '')
   const [zoom, setZoom] = useState(100)
   const [fitScale, setFitScale] = useState(() =>
     calcFitScale(window.innerWidth, window.innerHeight),
   )
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = REPORT_SLIDES.length
+
+  const report = getReport(selectedVersion)
+  const slides = report?.slides ?? []
+  const totalSlides = slides.length
 
   useEffect(() => {
     const onResize = () =>
@@ -92,7 +87,7 @@ function App() {
       }}
     >
       <Toolbar
-        versions={MOCK_VERSIONS}
+        versions={REPORT_VERSIONS}
         selectedId={selectedVersion}
         onSelect={setSelectedVersion}
         onExportPdf={handleExportPdf}
@@ -101,7 +96,7 @@ function App() {
         totalSlides={totalSlides}
       />
 
-      {REPORT_SLIDES.map((t, i) => (
+      {slides.map((t, i) => (
         <SlideWrapper key={t.id} scale={scale} slideIndex={i}>
           {t.element}
         </SlideWrapper>

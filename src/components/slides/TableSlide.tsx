@@ -2,7 +2,7 @@ import { Header } from '../ui/Header'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
 import { getCategoryColor } from '../../theme/categories'
-import tablerBulb from '../../../assets/icons/tabler_bulb.svg'
+import { IconBulb } from '@tabler/icons-react'
 
 /** Максимальное occurrence для расчёта ширины бара */
 const MAX_OCCURRENCE = 100
@@ -236,11 +236,7 @@ export function TableSlide({
       >
         {/* Insight header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <img
-            src={tablerBulb}
-            alt=""
-            style={{ width: 16, height: 16, display: 'block' }}
-          />
+          <IconBulb size={16} color="rgba(255,255,255,0.5)" stroke={1.5} />
           <span
             style={{
               fontFamily: 'Inter, sans-serif',
