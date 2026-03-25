@@ -91,7 +91,7 @@ export function TopBrandsSlide({
       <div
         style={{
           position: 'absolute',
-          top: spacing.tableHeaderTop,
+          top: 80, // 24px gap from title baseline
           left: spacing.slideX,
           display: 'flex',
           gap: 40,
@@ -152,7 +152,7 @@ function BrandTable({ columnTitle, data }: { columnTitle: string; data: BrandRow
             display: 'flex',
             alignItems: 'flex-end',
             gap: 0,
-            borderBottom: `0.5px solid ${colors.border}`,
+            borderBottom: `1px solid ${colors.border}`,
             paddingBottom: 6,
             boxSizing: 'border-box',
           }}
@@ -175,7 +175,7 @@ function BrandTable({ columnTitle, data }: { columnTitle: string; data: BrandRow
                 alignItems: 'center',
                 height: 29,
                 gap: 0,
-                borderTop: '0.5px solid rgba(255,255,255,0.15)',
+                borderTop: i === 0 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
               }}
             >
               {/* Rank */}

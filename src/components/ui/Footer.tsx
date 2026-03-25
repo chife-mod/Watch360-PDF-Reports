@@ -13,7 +13,7 @@ interface FooterProps {
  * Footer — нижняя строка каждого слайда.
  * Слева: период (10px, white 100%) — опционально
  * Справа: домен/категория (10px, white 50%)
- * Позиция: bottom: 16px от нижнего края слайда
+ * Позиция: bottom: 16px от нижнего края слайда (= top: 422 при h=450, 10px font)
  */
 export function Footer({ period, right, rightUrl }: FooterProps) {
   const baseStyle: React.CSSProperties = {

@@ -16,6 +16,11 @@ export interface TopModelsTableSlideProps {
   footerRightUrl?: string
 }
 
+const DEFAULTS = {
+  footerRight: 'www.watch360.ai',
+  footerRightUrl: 'https://watch360.ai',
+}
+
 // ─── Column widths ──────────────────────────────────────────────────────────
 // Total available width: 656px
 // Rank(#) + thumb: 14 + 8gap + 28 = 50
@@ -67,8 +72,8 @@ export function TopModelsTableSlide({
   titleHighlight,
   watches,
   startIndex = 0,
-  footerRight,
-  footerRightUrl,
+  footerRight = DEFAULTS.footerRight,
+  footerRightUrl = DEFAULTS.footerRightUrl,
 }: TopModelsTableSlideProps) {
   return (
     <SlideFrame>
@@ -78,7 +83,7 @@ export function TopModelsTableSlide({
       <div
         style={{
           position: 'absolute',
-          top: 32,
+          top: 24,
           left: 32,
           width: 437,
           fontFamily: typography.fontFamily,
@@ -99,7 +104,7 @@ export function TopModelsTableSlide({
         style={{
           position: 'absolute',
           left: 32,
-          top: 88,        // moved up: header fits now
+          top: 80,        // testing 24px gap from title baseline
           width: 656,
           display: 'flex',
           flexDirection: 'column',
@@ -111,13 +116,13 @@ export function TopModelsTableSlide({
             display: 'flex',
             alignItems: 'flex-end',
             width: '100%',
-            borderBottom: `0.5px solid ${colors.border}`,
+            borderBottom: `1px solid ${colors.border}`,
             paddingBottom: 6,
             boxSizing: 'border-box',
           }}
         >
           <div style={{ ...HDR, width: COL.rank }}>Rank</div>
-          <div style={{ ...HDR, width: COL.model }}>Model</div>
+          <div style={{ ...HDR, width: COL.model, paddingLeft: 8 }}>Model</div>
           <div style={{ ...HDR, width: COL.brand }}>Brand</div>
           <div style={{ ...HDR, width: COL.articles }}>Articles</div>
           <div style={{ ...HDR, width: COL.sources }}>Sources</div>
@@ -139,7 +144,7 @@ export function TopModelsTableSlide({
                 alignItems: 'center',
                 width: '100%',
                 height: 32,
-                borderTop: '0.5px solid rgba(255,255,255,0.15)',
+                borderTop: i === 0 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
                 boxSizing: 'border-box',
               }}
             >
@@ -162,7 +167,7 @@ export function TopModelsTableSlide({
                     height: 28,
                     borderRadius: 8,
                     border: '0.5px solid rgba(255,255,255,0.24)',
-                    backgroundColor: '#1d2437',
+                    backgroundColor: colors.thumbnailBg,
                     overflow: 'hidden',
                     flexShrink: 0,
                   }}

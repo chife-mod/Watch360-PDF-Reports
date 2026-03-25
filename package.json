@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pdf": "node scripts/export-pdf.mjs",
+    "map": "node scripts/export-map.mjs"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.40.0",
@@ -15,6 +17,10 @@
     "@types/d3-geo": "^3.1.0",
     "@types/topojson-client": "^3.1.5",
     "d3-geo": "^3.1.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.40.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-simple-maps": "^3.0.0",

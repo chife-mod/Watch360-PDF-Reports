@@ -10,12 +10,14 @@ export const colors = {
   /** App / viewer background */
   appBg: '#000000',
   surface: '#1a1a1a',
-  /** Table header border */
-  border: '#808080',
+  /** Table header border — light (2x brighter than rows) */
+  border: 'rgba(255, 255, 255, 0.3)',
   text: {
     primary: '#FFFFFF',
     secondary: 'rgba(255, 255, 255, 0.5)',
   },
+  /** Watch thumbnail card background */
+  thumbnailBg: '#1D2437',
   accent: {
     /** Title highlight (Figma: #00C3D9) */
     teal: '#00C3D9',

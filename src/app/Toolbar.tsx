@@ -66,6 +66,7 @@ export function Toolbar({
 
   return (
     <div
+      data-print-hide
       style={{
         position: 'fixed',
         top: 0,

@@ -2,6 +2,48 @@
 
 ---
 
+## 2026-03-25 (сессия 3) — Table of Contents & Table alignments
+
+### ✅ Сделано
+
+#### Table of Contents
+- Обновлены плитки в `TableOfContentSlide` для февральского отчета `src/reports/feb-2026.tsx`.
+- Теперь там 6 разделов, строго соответствующие текущим слайдам: Overview, Coverage, Top 10 Sources, Top 25 Brands, Top 20 Collections, Top 25 Watch References.
+- В `AGENTS.md` добавлено строгое правило: **Always update `TableOfContentSlide` before committing**.
+
+#### Фиксы таблиц (Header borders & Alignment)
+- У всех таблиц линия под хедером сделана строго `1px` толщиной и `rgba(255, 255, 255, 0.3)` (30% brightness, pure white).
+- `WatchReferencesSlide` и `TopModelsTableSlide`: исправлено пиксельное смещение колонки `Model` в хедере относительно контента. Добавлен `boxSizing: 'border-box'` для превью часов, и `paddingLeft` заголовку в `TopModelsTableSlide`.
+
+---
+
+## 2026-03-25 (сессия 2) — Фото моделей [6-15] + Back Cover + Footer fix
+
+### ✅ Сделано
+
+#### Фронтальные фото для Top Watch References [6-15]
+- Скачаны 10 фото в `assets/images/top6-15/` (файлы `6.png`…`15.png`).
+- Источники: Seiko official (1102×1102), Omega official (2000×2000), WatchBase CDN (433–500px), Longines official.
+- Все импортированы в `feb-2026.tsx` и привязаны к `modelsTop10Data[].image`.
+- Миниатюры 28×28px с `borderRadius:8` отображаются в колонке Rank.
+
+#### Back Cover — завершающий слайд отчёта
+- Добавлен `SectionCoverSlide` в конец `SLIDES[]` в `feb-2026.tsx` (id: `back-cover`).
+- Данные берутся из `REPORT_META`: title, period, website.
+- Компонент существовал — переиспользован без изменений логики.
+
+#### Footer: `bottom: 16` → `bottom: 28` (Figma node 30-4507)
+- `Footer.tsx`: `bottom: 16` → `bottom: 28` — влияет на все слайды.
+- `SectionCoverSlide.tsx`: footer left `top: 408` → `bottom: 28`.
+- Выравнивание левого и правого текста футера по одной линии.
+
+### 🔲 Следующее
+- Ревью консистентности отступов/цветов по всем слайдам (в процессе).
+- Создать `Top Watch References [16-25]`.
+- PDF экспорт: vector PDF через Puppeteer `page.pdf()` (план готов).
+
+---
+
 ## 2026-03-25 — Слайд Top Watch References [6-15] + дизайн-система
 
 ### ✅ Сделано

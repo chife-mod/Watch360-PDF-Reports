@@ -48,3 +48,52 @@ input[type="range"]::-moz-range-thumb {
   border: none;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 }
+
+/* ════════════════════════════════════════════════════════════
+   PRINT / PDF EXPORT
+   Browser print dialog → "Save as PDF"
+   Each slide renders at exact 720×450px, one per page.
+   ════════════════════════════════════════════════════════════ */
+
+@page {
+  size: 720px 450px;
+  margin: 0;
+}
+
+@page {
+  size: 720px 450px;
+  margin: 0;
+}
+
+@media print {
+  /* Hide all UI chrome (toolbar, zoom slider) */
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Preserve background colors and images */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset viewer container padding/gaps */
+  #report-viewer {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* Each slide = one page, no shadow */
+  .slide-wrapper {
+    box-shadow: none !important;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .slide-wrapper:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+}

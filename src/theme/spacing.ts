@@ -18,13 +18,13 @@ export const spacing = {
 
   /** ── Title (slide H1) ──────────────────────────────────── */
   /** Top of the slide title (H1) */
-  titleTop: 22,
+  titleTop: 24,
   /** Gap between slide title baseline and first content element */
-  titleToContent: 50, // titleTop(22) + titleHeight(~28) + gap(~0)
+  titleToContent: 52, // titleTop(24) + titleHeight(~28) + gap(~0)
 
   /** ── Table layout ──────────────────────────────────────── */
   /** Top of table column headers (below title) */
-  tableHeaderTop: 72,
+  tableHeaderTop: 80, // 24px gap from title baseline (title top:24 + fontSize:32 + gap:24)
   /** Top of first table row (≈ tableHeaderTop + headerRowHeight + separator) */
   tableRowsTop: 90,
   /** Fixed row height for standard table rows */

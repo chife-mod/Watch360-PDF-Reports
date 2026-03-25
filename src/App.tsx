@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Toolbar } from './app/Toolbar'
 import { TemplatesPage } from './app/TemplatesPage'
 import { REPORT_VERSIONS, getReport } from './reports'
+import { MapServicePage } from './components/slides/TopCountriesSlide'
 
 /* ── Constants ────────────────────────────────────────────── */
 
@@ -63,7 +64,67 @@ function App() {
   }, [view])
 
   const handleExportPdf = () => {
-    console.log('Export PDF — not implemented yet')
+    const printUrl = `${window.location.origin}/?pdf=all`
+    const printWindow = window.open(printUrl, '_blank')
+    if (printWindow) {
+      printWindow.addEventListener('load', () => {
+        setTimeout(() => printWindow.print(), 1500)
+      })
+    }
+  }
+
+  // ── Map Service Page ──
+  // ?map → render ONLY the world map for high-res screenshot export
+  const mapParam = new URLSearchParams(window.location.search).get('map')
+  if (mapParam !== null) {
+    return <MapServicePage />
+  }
+
+  // ── PDF Render Mode ──
+  // ?pdf=0 → render slide 0 at 1:1, no chrome, no transform
+  // ?pdf=all → render ALL slides stacked with page-break markers
+  const pdfParam = new URLSearchParams(window.location.search).get('pdf')
+  if (pdfParam !== null) {
+    if (pdfParam === 'all') {
+      return (
+        <div style={{ margin: 0, padding: 0, background: '#0D0D0D' }}>
+          {slides.map((t, i) => (
+            <div
+              key={t.id}
+              id={`pdf-slide-${i}`}
+              className="pdf-page"
+              style={{
+                width: SLIDE_W,
+                height: SLIDE_H,
+                position: 'relative',
+                overflow: 'hidden',
+                pageBreakAfter: 'always',
+              }}
+            >
+              {t.element}
+            </div>
+          ))}
+        </div>
+      )
+    }
+    const slideIdx = parseInt(pdfParam, 10)
+    const slide = slides[slideIdx]
+    if (!slide) return <div>Slide {slideIdx} not found</div>
+    return (
+      <div
+        style={{
+          width: SLIDE_W,
+          height: SLIDE_H,
+          position: 'relative',
+          overflow: 'hidden',
+          background: '#0D0D0D',
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {slide.element}
+      </div>
+    )
   }
 
   if (view === 'templates') {
@@ -75,6 +136,7 @@ function App() {
 
   return (
     <div
+      id="report-viewer"
       style={{
         background: '#000',
         minHeight: '100vh',
@@ -122,6 +184,7 @@ function SlideWrapper({
   return (
     <div
       id={`slide-${slideIndex}`}
+      className="slide-wrapper"
       style={{
         width: SLIDE_W * scale,
         height: SLIDE_H * scale,
@@ -131,6 +194,7 @@ function SlideWrapper({
       }}
     >
       <div
+        className="slide-inner"
         style={{
           width: SLIDE_W,
           height: SLIDE_H,
@@ -161,6 +225,7 @@ function ZoomSlider({
 
   return (
     <div
+      data-print-hide
       style={{
         position: 'fixed',
         bottom: 24,

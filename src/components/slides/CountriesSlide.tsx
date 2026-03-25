@@ -3,6 +3,7 @@ import * as d3 from 'd3-geo'
 import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
 import { Header } from '../ui/Header'
+import { colors } from '../../theme/colors'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
 
@@ -189,7 +190,7 @@ export function CountriesSlide({
       <div
         style={{
           position: 'absolute',
-          top: 68,
+          top: 80, // 24px gap from title baseline
           left: 452,
           width: 240,
           display: 'flex',
@@ -202,7 +203,7 @@ export function CountriesSlide({
             display: 'flex',
             alignItems: 'center',
             paddingBottom: 7,
-            borderBottom: '0.5px solid #808080',
+            borderBottom: `1px solid ${colors.border}`,
             gap: 0,
           }}
         >
@@ -220,7 +221,7 @@ export function CountriesSlide({
             style={{
               display: 'flex',
               alignItems: 'center',
-              borderTop: '0.5px solid rgba(255,255,255,0.07)',
+              borderTop: c.rank === 1 ? 'none' : '0.5px solid rgba(255,255,255,0.07)',
               padding: '4.5px 0',
             }}
           >

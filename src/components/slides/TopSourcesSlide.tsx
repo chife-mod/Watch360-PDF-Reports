@@ -93,13 +93,13 @@ export function TopSourcesSlide({
       <div
         style={{
           position: 'absolute',
-          top: spacing.tableHeaderTop,
+          top: 80, // 24px gap from title baseline
           left: spacing.slideX,
           width: 455,
           display: 'flex',
           alignItems: 'flex-end',
           gap: 0,
-          borderBottom: `0.5px solid ${colors.border}`,
+          borderBottom: `1px solid ${colors.border}`,
           paddingBottom: 6,
           boxSizing: 'border-box',
         }}
@@ -114,7 +114,7 @@ export function TopSourcesSlide({
       <div
         style={{
           position: 'absolute',
-          top: 88,
+          top: 96, // tableHeaderTop(80) + header height (~16)
           left: spacing.slideX,
           width: 455,
           display: 'flex',
@@ -132,7 +132,7 @@ export function TopSourcesSlide({
                 alignItems: 'center',
                 height: spacing.tableRowHeight,
                 gap: 0,
-                borderTop: '0.5px solid rgba(255,255,255,0.15)',
+                borderTop: s.rank === 1 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
               }}
             >
               {/* Rank — plain number, same convention as TableSlide */}

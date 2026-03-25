@@ -125,7 +125,7 @@ export function parseTopModels(filePath: string, limit = 5): WatchReference[] {
     models.push({
       brand: String(row[2]).trim(),
       model: String(row[1]).trim(),
-      mentions: Number(row[3]) || 0,
+      articles: Number(row[3]) || 0,
       sources: Number(row[4]) || 0,
       countries: Number(row[5]) || 0,
       priceRange: String(row[6]) || '-',

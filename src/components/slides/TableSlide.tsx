@@ -133,7 +133,7 @@ export function TableSlide({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                borderTop: '0.5px solid rgba(255,255,255,0.15)',
+                borderTop: i === 0 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
               }}
             >
               {/* Rank */}

@@ -182,6 +182,7 @@ Google Sheet URL
 
 ## Working Conventions
 
+- **Always update `TableOfContentSlide` before committing** (ensure all slides match the layout tiles).
 - **Always update `history/history.md`** after completing a feature or fixing a bug
 - Components are pure React — no side effects, data comes via props
 - All sizes in px (not rem) — slides are fixed-size, not responsive

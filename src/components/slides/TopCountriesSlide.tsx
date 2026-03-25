@@ -5,9 +5,11 @@ import type { Topology, GeometryCollection } from 'topojson-specification'
 import { Header } from '../ui/Header'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
+import { colors } from '../../theme/colors'
 import logo01 from '../../../assets/logos/01.png'
 import logo02 from '../../../assets/logos/02.png'
 import logo03 from '../../../assets/logos/03.png'
+import mapImage from '../../../assets/images/map-4x.png'
 
 /* ── Types ────────────────────────────────────────────────────────── */
 
@@ -75,6 +77,8 @@ const TOPO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json
 
 function WorldMap({ highlighted }: { highlighted: Map<string, number> }) {
   const [paths, setPaths] = useState<{ id: string; d: string }[]>([])
+  const isPdf = typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('pdf') !== null
 
   useEffect(() => {
     fetch(TOPO_URL)
@@ -99,6 +103,13 @@ function WorldMap({ highlighted }: { highlighted: Map<string, number> }) {
       .catch(() => {/* silently fail */})
   }, [])
 
+  /** Solid fill color for a given rank (PDF mode) or base (non-highlighted) */
+  const solidFill = (rank: number | undefined) => {
+    if (rank == null) return 'rgba(255,255,255,0.06)'
+    const opacity = Math.max(0.20, 0.50 - (rank - 1) * 0.032)
+    return `rgba(0,195,217,${opacity.toFixed(2)})`
+  }
+
   return (
     <svg
       width={MAP_W}
@@ -106,38 +117,46 @@ function WorldMap({ highlighted }: { highlighted: Map<string, number> }) {
       viewBox={`0 0 ${MAP_W} ${MAP_H}`}
       style={{ display: 'block' }}
     >
-      <defs>
-        {/* Base: very dim dots for non-highlighted countries */}
-        <pattern id="tc-dots-base" x="0" y="0" width="3.5" height="3.5" patternUnits="userSpaceOnUse">
-          <circle cx="1.75" cy="1.75" r="0.75" fill="rgba(255,255,255,0.15)" />
-        </pattern>
+      {!isPdf && (
+        <defs>
+          {/* Base: very dim dots for non-highlighted countries */}
+          <pattern id="tc-dots-base" x="0" y="0" width="3.5" height="3.5" patternUnits="userSpaceOnUse">
+            <circle cx="1.75" cy="1.75" r="0.75" fill="rgba(255,255,255,0.15)" />
+          </pattern>
 
-        {/* Highlighted: teal, brightness scales with rank (rank 1 = brightest) */}
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(rank => {
-          const opacity = Math.max(0.45, 1.0 - (rank - 1) * 0.058)
-          return (
-            <pattern
-              key={rank}
-              id={`tc-dots-t${rank}`}
-              x="0" y="0" width="3.5" height="3.5"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle cx="1.75" cy="1.75" r="0.95" fill={`rgba(0,195,217,${opacity.toFixed(2)})`} />
-            </pattern>
-          )
-        })}
-
-        {/* No mask — full opacity everywhere so teal dots are visible behind cards */}
-      </defs>
+          {/* Highlighted: teal, brightness scales with rank (rank 1 = brightest) */}
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(rank => {
+            const opacity = Math.max(0.45, 1.0 - (rank - 1) * 0.058)
+            return (
+              <pattern
+                key={rank}
+                id={`tc-dots-t${rank}`}
+                x="0" y="0" width="3.5" height="3.5"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="1.75" cy="1.75" r="0.95" fill={`rgba(0,195,217,${opacity.toFixed(2)})`} />
+              </pattern>
+            )
+          })}
+        </defs>
+      )}
 
       <g>
         {paths.map(({ id, d }) => {
           const rank = highlighted.get(id)
+          let fill: string
+          if (isPdf) {
+            // Solid fills for PDF — stays 100% vector
+            fill = solidFill(rank)
+          } else {
+            // Dot patterns for screen
+            fill = rank != null ? `url(#tc-dots-t${rank})` : 'url(#tc-dots-base)'
+          }
           return (
             <path
               key={id}
               d={d}
-              fill={rank != null ? `url(#tc-dots-t${rank})` : 'url(#tc-dots-base)'}
+              fill={fill}
               stroke="none"
             />
           )
@@ -159,7 +178,7 @@ function MediaBadgeEl({ name, logo }: { name: string; logo: string }) {
           height: 32,
           borderRadius: '50%',
           border: '0.5px solid rgba(255,255,255,0.24)',
-          background: '#1D2437',
+          background: colors.thumbnailBg,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -217,13 +236,12 @@ export function TopCountriesSlide({
   footerRightUrl = 'https://www.watch360.ai',
 }: TopCountriesSlideProps) {
   const maxSrc = Math.max(...countries.map(c => c.sources))
-  const highlightedMap = new Map<string, number>(countries.map(c => [c.isoNumeric, c.rank]))
 
   return (
     <SlideFrame>
       <Header />
 
-      {/* ── World Map: left=185, bleeds right past 720px ── */}
+      {/* ── World Map: pre-rendered 4x PNG from assets ── */}
       <div
         style={{
           position: 'absolute',
@@ -236,7 +254,15 @@ export function TopCountriesSlide({
           zIndex: 1,
         }}
       >
-        <WorldMap highlighted={highlightedMap} />
+        <img
+          src={mapImage}
+          alt="World Map"
+          style={{
+            width: MAP_W,
+            height: MAP_H,
+            display: 'block',
+          }}
+        />
       </div>
 
       {/* ── Media source badges — absolute on the slide ── */}
@@ -323,10 +349,8 @@ export function TopCountriesSlide({
                 gap: 4,
                 paddingLeft: 8,
                 paddingRight: 8,
-                background: 'rgba(255,255,255,0.04)',
+                background: 'rgba(18,18,18,0.92)',
                 borderRadius: 4,
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
                 boxSizing: 'border-box',
               }}
             >
@@ -368,15 +392,14 @@ export function TopCountriesSlide({
                   boxSizing: 'border-box',
                 }}
               >
-                {/* Flag: top-aligned (pt=2, h-full) */}
+                {/* Flag: vertically centered to align with country name */}
                 <div
                   style={{
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    paddingTop: 2,
-                    flexShrink: 0,
+                    justifyContent: 'center',
+                    marginTop: -3,
                   }}
                 >
                   <span style={{ fontSize: 16, lineHeight: 1 }}>{c.flag}</span>
@@ -475,4 +498,32 @@ const hdrStyle: React.CSSProperties = {
   letterSpacing: '0.14px',
   lineHeight: 1.5,
   whiteSpace: 'nowrap',
+}
+
+/* ── Map Service Page ─────────────────────────────────────────────── */
+/**
+ * Standalone page that renders ONLY the WorldMap on a dark background.
+ * Used by export-pdf.mjs to capture a high-res 3x screenshot of the map
+ * which is then substituted into the Countries slide during PDF export.
+ *
+ * Route: /?map
+ */
+export function MapServicePage() {
+  const highlightedMap = new Map<string, number>(
+    FEB_2026_COUNTRIES.map(c => [c.isoNumeric, c.rank])
+  )
+  return (
+    <div
+      id="map-service"
+      style={{
+        width: MAP_W,
+        height: MAP_H,
+        background: '#0D0D0D',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+    >
+      <WorldMap highlighted={highlightedMap} />
+    </div>
+  )
 }

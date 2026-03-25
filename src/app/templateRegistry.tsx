@@ -38,22 +38,22 @@ const MOCK_INSIGHTS = [
 const MOCK_WATCHES = [
   {
     image: watchImg, brand: 'Grand Seiko', model: 'Annual Accuracy Quartz SBGX361',
-    launchDate: 'Launch Apr, 2026', mentions: 23, sources: 23, countries: 23,
+    launchDate: 'Launch Apr, 2026', articles: 23, sources: 23, countries: 23,
     priceRange: '$10 000-$25 000', dialColor: 'Blue', dialColorHex: '#455691',
   },
   {
     image: watchImg, brand: 'Grand Seiko', model: 'Heritage Collection SBGA211',
-    launchDate: 'Launch Mar, 2026', mentions: 19, sources: 17, countries: 14,
+    launchDate: 'Launch Mar, 2026', articles: 19, sources: 17, countries: 14,
     priceRange: '$5 000-$10 000', dialColor: 'White', dialColorHex: '#C0C0C0',
   },
   {
     image: watchImg, brand: 'Omega', model: 'Seamaster Planet Ocean 600M',
-    launchDate: 'Launch Feb, 2026', mentions: 31, sources: 28, countries: 19,
+    launchDate: 'Launch Feb, 2026', articles: 31, sources: 28, countries: 19,
     priceRange: '$5 000-$10 000', dialColor: 'Black', dialColorHex: '#3A3A3A',
   },
   {
     image: watchImg, brand: 'Rolex', model: 'Submariner Date 126610LN',
-    launchDate: 'Launch Jan, 2026', mentions: 45, sources: 38, countries: 27,
+    launchDate: 'Launch Jan, 2026', articles: 45, sources: 38, countries: 27,
     priceRange: '$10 000-$25 000', dialColor: 'Black', dialColorHex: '#3A3A3A',
   },
 ]

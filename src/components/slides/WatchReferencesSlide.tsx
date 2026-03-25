@@ -80,7 +80,7 @@ export function WatchReferencesSlide({
       >
         <span style={{ lineHeight: 1 }}>{title}</span>
         {titleHighlight && (
-          <span style={{ lineHeight: 1, color: '#00c3d9' }}>
+          <span style={{ lineHeight: 1, color: colors.accent.teal }}>
             {' '}
             {titleHighlight}
           </span>
@@ -91,7 +91,7 @@ export function WatchReferencesSlide({
       <div
         style={{
           position: 'absolute',
-          top: 96,
+          top: 80, // 24px gap from title baseline
           left: 32,
           width: 656,
           display: 'flex',
@@ -103,7 +103,7 @@ export function WatchReferencesSlide({
           style={{
             display: 'flex',
             alignItems: 'flex-end',
-            borderBottom: `0.5px solid ${colors.border}`,
+            borderBottom: `1px solid ${colors.border}`,
             paddingBottom: 6,
             boxSizing: 'border-box',
           }}
@@ -126,7 +126,7 @@ export function WatchReferencesSlide({
               display: 'flex',
               alignItems: 'center',
               height: 62,
-              borderTop: '0.5px solid rgba(255,255,255,0.15)',
+              borderTop: i === 0 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
               boxSizing: 'border-box',
             }}
           >
@@ -137,7 +137,7 @@ export function WatchReferencesSlide({
                 fontFamily: 'Inter, sans-serif',
                 fontSize: 10,
                 fontWeight: 700,
-                color: i === 0 ? '#00c3d9' : 'white',
+                color: i === 0 ? colors.accent.teal : 'white',
                 lineHeight: 1.5,
                 flexShrink: 0,
               }}
@@ -154,8 +154,9 @@ export function WatchReferencesSlide({
                   borderRadius: 16,
                   border: '0.5px solid rgba(255,255,255,0.24)',
                   overflow: 'hidden',
-                  backgroundColor: '#1d2437',
+                  backgroundColor: colors.thumbnailBg,
                   position: 'relative',
+                  boxSizing: 'border-box',
                 }}
               >
                 {w.image && (
@@ -281,7 +282,7 @@ const hdrStyle: React.CSSProperties = {
   opacity: 0.5,
   textTransform: 'uppercase',
   letterSpacing: '0.14px',
-  lineHeight: 1.5,
+  lineHeight: 1,
   whiteSpace: 'nowrap',
   flexShrink: 0,
 }

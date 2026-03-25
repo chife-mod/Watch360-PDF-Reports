@@ -86,7 +86,7 @@ export const TopCollectionsSlide: React.FC<TopCollectionsSlideProps> = ({
       <div
         style={{
           position: 'absolute',
-          top: 104, // aligned visually to table top in TopBrandsSlide
+          top: 80, // 24px gap from title baseline
           left: spacing.slideX,
           display: 'flex',
           gap: 40,
@@ -138,7 +138,7 @@ function CollectionTable({
           display: 'flex',
           alignItems: 'flex-end',
           gap: 0,
-          borderBottom: `0.5px solid ${colors.border}`,
+          borderBottom: `1px solid ${colors.border}`,
           paddingBottom: 6,
           boxSizing: 'border-box',
         }}
@@ -163,7 +163,7 @@ function CollectionTable({
               alignItems: 'center',
               height: 29, // consistent with other tables
               gap: 0,
-              borderTop: '0.5px solid rgba(255,255,255,0.15)',
+              borderTop: i === 0 ? 'none' : '0.5px solid rgba(255,255,255,0.15)',
             }}
           >
             {/* Rank */}

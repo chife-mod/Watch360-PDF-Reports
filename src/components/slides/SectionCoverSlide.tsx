@@ -87,7 +87,7 @@ export function SectionCoverSlide({
         <span
           style={{
             position: 'absolute',
-            top: 408,
+            bottom: 16,
             left: 35,
             fontFamily: 'Inter, sans-serif',
             fontSize: 10,

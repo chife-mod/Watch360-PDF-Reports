@@ -1,7 +1,7 @@
 import { SlideFrame } from '../ui/SlideFrame'
 import { Header } from '../ui/Header'
 import { Footer } from '../ui/Footer'
-import quotesImg from '../../../assets/images/Quotes_Image_1.webp'
+import quotesImg from '../../../assets/images/Quotes_Image_1.png'
 
 export interface QuoteSlideProps {
   /** Текст цитаты */
@@ -60,18 +60,6 @@ export function QuoteSlide({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-          }}
-        />
-
-        {/* Gradient overlays — darken right side for text readability */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: [
-              'linear-gradient(257deg, rgba(0,0,0,0.5) 11.7%, rgba(0,0,0,0.1) 47.9%)',
-              'linear-gradient(-77deg, rgba(0,0,0,0.5) 35.4%, rgba(0,0,0,0.1) 69.8%)',
-            ].join(', '),
           }}
         />
       </div>
