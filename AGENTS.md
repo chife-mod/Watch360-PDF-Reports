@@ -163,7 +163,9 @@ Use `get_design_context` to inspect nodes — do NOT use `get_screenshot` (cause
 
 - Fixed size: **720×450px** (16:10)
 - In web viewer: `transform: scale()` to fit window
-- PDF: Puppeteer opens each slide at exact dimensions, exports vector PDF
+- PDF: Browser's native `window.print()` triggered via `/?pdf=all`
+  - Print dialog MUST be set to `Save as PDF` / `Landscape`.
+  - Background graphics are included natively (via CSS `@media print`).
 
 ---
 
@@ -174,8 +176,18 @@ Google Sheet URL
   → Google Sheets API v4 → JSON (all tabs)
   → transform.ts: map tabs → slide props
   → React: render slide components
-  → Puppeteer: screenshot each → PDF pages
-  → merge → reports/YYYY-MM-DD/report.pdf
+  → React: render slide components
+  → Static web deployment (GitHub Pages)
+  → Client clicks "Export PDF" → `window.print()` native generation
+```
+
+## Map Rendering Strategy (Critical)
+
+Due to browser scaling issues with complex SVGs spanning multiple slides during `window.print()`, the **World Map** is rendered as a static, pre-rasterized 4x PNG asset, instead of a live React Recharts component.
+
+- **Service Route:** Local dev `http://localhost:5173/?map` renders ONLY the live map.
+- **Export Script:** `npm run map` calls Puppeteer to screenshot `/?map` at high DPI.
+- **Output:** Saves to `assets/images/map-4x.png`, which is then imported conventionally in `TopCountriesSlide.tsx`.
 ```
 
 ---
@@ -192,11 +204,29 @@ Google Sheet URL
 
 ---
 
+## Deployment & Hosting
+
+The application is a 100% static React SPA (Single Page Application). No backend or Node.js runtime is required for production.
+It currently runs on GitHub Pages at `https://chife-mod.github.io/Watch360-PDF-Reports/`.
+
+### How to deploy to GitHub Pages manually:
+Because `dist/` is in `.gitignore`, a standard `git add -A` ignores the production build. You **must** forcefully add the `dist/` folder before pushing to avoid "Black Screen" (404 JS bundle missing) errors on GitHub Pages.
+
+```bash
+npm run build
+git add -f dist
+git commit -m "deploy: update github pages"
+git subtree push --prefix dist origin gh-pages
+```
+
+If moving to a custom server (Nginx/S3/Vercel), simply upload the `dist/` folder and configure routing to point `404` requests to `index.html`.
+
+---
+
 ## Commands
 
 ```bash
 npm run dev      # start Vite dev server
 npm run build    # TypeScript check + Vite build
-npm run lint     # ESLint
-npm run pdf      # generate PDF via Puppeteer (not yet implemented)
+npm run map      # export 4x PNG map asset from /?map route via Puppeteer
 ```
