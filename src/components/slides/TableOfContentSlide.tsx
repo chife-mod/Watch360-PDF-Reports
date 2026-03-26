@@ -7,6 +7,8 @@ export interface TocItem {
   page: string
   /** Название раздела */
   title: string
+  /** ID слайда для навигации (slide-0, slide-1…) */
+  slideId?: string
 }
 
 interface Props {
@@ -64,6 +66,11 @@ export function TableOfContentSlide({ items, footerRight = 'www.watch360.ai' }: 
         {tiles.map((item, i) => (
           <div
             key={i}
+            onClick={() => {
+              if (!item.slideId) return
+              const el = document.getElementById(item.slideId)
+              el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }}
             style={{
               background: 'rgba(255, 255, 255, 0.05)',
               borderRadius: 4,
@@ -72,6 +79,8 @@ export function TableOfContentSlide({ items, footerRight = 'www.watch360.ai' }: 
               flexDirection: 'column',
               justifyContent: 'space-between',
               boxSizing: 'border-box',
+              cursor: item.slideId ? 'pointer' : 'default',
+              transition: 'background 0.15s',
             }}
           >
             {/* Big transparent number */}

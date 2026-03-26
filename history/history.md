@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-03-26 (сессия 6) — TOC навигация + "Titanium" in Titles
+
+### ✅ Сделано
+
+#### TOC — кликабельные плитки
+- `TocItem` получил опциональный `slideId: string`.
+- При клике на плитку вызывается `scrollIntoView({ behavior: 'smooth', block: 'center' })` на соответствующем `#slide-N`.
+- Все 8 пунктов TOC получили `slideId` в `feb-2026.tsx`.
+- Курсор `pointer` + `transition: background` на интерактивных плитках.
+
+#### `TitaniumSlide.tsx` — Top 10 Brands
+- Полная аналогия с `RoseGoldSlide`: заголовок + overview-строка + две таблицы брендов.
+- Данные из Excel-вкладки `8. "Titanium" in Title`.
+- Overview: Sources 59, Articles 142, Comments 310.
+- All Mentions: Vacheron Constantin (28) лидирует. Title Mentions: Vacheron Constantin (20).
+
+#### `TitaniumModelsSlide.tsx` — Top 10 Models
+- Полная аналогия с `RoseGoldModelsSlide`: 2 колонки × 5 карточек.
+- Данные: Overseas Tourbillon (9 articles) и два Angelus Chronodate (по 4) в топе.
+- TOC обновлён: пункт `08 — "Titanium" in Titles` → `slide-13`.
+
+### 📁 Затронутые файлы
+- `src/components/slides/TableOfContentSlide.tsx` — slideId + onClick
+- `src/components/slides/TitaniumSlide.tsx` — новый
+- `src/components/slides/TitaniumModelsSlide.tsx` — новый
+- `src/reports/feb-2026.tsx` — импорты, SLIDES[], TOC items
+
+---
+
 ## 2026-03-26 (сессия 5) — "Rose Gold" in Titles: два новых слайда
 
 ### ✅ Сделано
