@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-03-26 (сессия 5) — "Rose Gold" in Titles: два новых слайда
+
+### ✅ Сделано
+
+#### `RoseGoldSlide.tsx` — Top 10 Brands (новый слайд)
+- Новый компонент: две колонки с таблицами брендов (All Mentions / Brand Mentions in Title) по образцу `TopBrandsSlide`.
+- Overview-метрики (Sources: 47, Articles: 103, Comments: 95) в строку под заголовком в стиле table-header (7px uppercase 50% opacity) — минималистично и без отвлечения от данных.
+- Данные из Excel-вкладки `7. "Rose Gold" or "Everose Gold" in Title`.
+- **Новый паттерн**: overview-строка под заголовком (Sources: X   Articles: X   Comments: X) — переиспользуется в следующем слайде.
+
+#### `RoseGoldModelsSlide.tsx` — Top 10 Models (новый слайд, новый лейаут)
+- **Новый лейаут**: две колонки по 5 карточек, аналогично `WatchReferencesSlide [1-5]`.
+- Каждая карточка: rank (bold teal для #1) → image placeholder 50×50 (borderRadius 16) → brand tag (hug content) → model name (2-line clamp) → articles qty + bar chart справа.
+- Те же overview-метрики под заголовком (паттерн из RoseGoldSlide).
+- Данные: правая таблица Excel (Model, Brand, Articles qty), top-10.
+- Row height: 58px (vs 62px в WatchReferencesSlide) — меньше чтобы 5 строк + header не наезжали на footer.
+
+#### Table of Contents
+- Добавлен пункт `07 — "Rose Gold" in Titles` (один раздел, два слайда).
+
+### 📁 Затронутые файлы
+- `src/components/slides/RoseGoldSlide.tsx` — новый
+- `src/components/slides/RoseGoldModelsSlide.tsx` — новый
+- `src/reports/feb-2026.tsx` — добавлены `rose-gold`, `rose-gold-models` в `SLIDES[]`; TOC обновлён
+
+---
+
 ## 2026-03-25 (сессия 4) — PDF Export Workflow & Map Rendering Strategy
 
 ### ✅ Сделано
