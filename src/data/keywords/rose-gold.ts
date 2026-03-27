@@ -1,0 +1,42 @@
+import type { KeywordData } from './types'
+
+export const roseGold: KeywordData = {
+  keyword: '\u201CRose Gold\u201D in Titles',
+  overview: { sources: '47', articles: '103', comments: '95' },
+  allMentions: [
+    { rank: 1, brand: 'Daniel Roth', articles: 27 },
+    { rank: 2, brand: 'Armin Strom', articles: 15 },
+    { rank: 3, brand: 'Breguet', articles: 8 },
+    { rank: 4, brand: 'Mido', articles: 8 },
+    { rank: 5, brand: 'Zenith', articles: 7 },
+    { rank: 6, brand: 'Audemars Piguet', articles: 7 },
+    { rank: 7, brand: 'Parmigiani Fleurier', articles: 6 },
+    { rank: 8, brand: 'Ressence', articles: 5 },
+    { rank: 9, brand: 'Longines', articles: 4 },
+    { rank: 10, brand: 'Bvlgari', articles: 3 },
+  ],
+  titleMentions: [
+    { rank: 1, brand: 'Daniel Roth', articles: 26 },
+    { rank: 2, brand: 'Armin Strom', articles: 14 },
+    { rank: 3, brand: 'Zenith', articles: 6 },
+    { rank: 4, brand: 'Ressence', articles: 5 },
+    { rank: 5, brand: 'Parmigiani Fleurier', articles: 3 },
+    { rank: 6, brand: 'Longines', articles: 3 },
+    { rank: 7, brand: 'Breguet', articles: 2 },
+    { rank: 8, brand: 'Mido', articles: 2 },
+    { rank: 9, brand: 'Audemars Piguet', articles: 1 },
+    { rank: 10, brand: 'Bvlgari', articles: 1 },
+  ],
+  models: [
+    { rank: 1,  brand: 'Mido',                model: 'Multifort 8 Two Crowns M047.507.37.051.00',         articles: 7 },
+    { rank: 2,  brand: 'Parmigiani Fleurier', model: 'TONDA PF MICRO-ROTOR STEEL PLATINUM AGAVE BLUE',    articles: 3 },
+    { rank: 3,  brand: 'Parmigiani Fleurier', model: 'TONDA PF MICRO-ROTOR ROSE GOLD AGAVE BLUE',         articles: 3 },
+    { rank: 4,  brand: 'Armin Strom',         model: 'Dual Time GMT Resonance Rose Gold RG25.DT.75',      articles: 3 },
+    { rank: 5,  brand: 'Daniel Roth',         model: 'Extra Plat Rose Gold Skeleton DBBD02A1',            articles: 3 },
+    { rank: 6,  brand: 'Daniel Roth',         model: 'Tourbillon Regulateur Double Face C187',            articles: 3 },
+    { rank: 7,  brand: 'Longines',            model: 'Master Collection Chrono Moonphase L2.773.8.78.3',  articles: 2 },
+    { rank: 8,  brand: 'Mido',                model: 'Multifort 8 One Crown Two-Tone M055.507.22.051.00', articles: 1 },
+    { rank: 9,  brand: 'Panerai',             model: 'Radiomir Otto Giorni PAM02088',                     articles: 1 },
+    { rank: 10, brand: 'Audemars Piguet',     model: 'Royal Oak Selfwinding 15510OR',                     articles: 1 },
+  ],
+}
