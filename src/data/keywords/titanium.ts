@@ -1,0 +1,42 @@
+import type { KeywordData } from './types'
+
+export const titanium: KeywordData = {
+  keyword: '\u201CTitanium\u201D in Titles',
+  overview: { sources: '59', articles: '142', comments: '310' },
+  allMentions: [
+    { rank: 1,  brand: 'Vacheron Constantin', articles: 28 },
+    { rank: 2,  brand: 'Hublot',              articles: 15 },
+    { rank: 3,  brand: 'Rolex',               articles: 8  },
+    { rank: 4,  brand: 'Breitling',           articles: 7  },
+    { rank: 5,  brand: 'Audemars Piguet',     articles: 7  },
+    { rank: 6,  brand: 'Breguet',             articles: 6  },
+    { rank: 7,  brand: 'Roger Dubuis',        articles: 5  },
+    { rank: 8,  brand: 'Omega',               articles: 5  },
+    { rank: 9,  brand: 'Tissot',              articles: 5  },
+    { rank: 10, brand: 'MB&F',                articles: 4  },
+  ],
+  titleMentions: [
+    { rank: 1,  brand: 'Vacheron Constantin', articles: 20 },
+    { rank: 2,  brand: 'Hublot',              articles: 13 },
+    { rank: 3,  brand: 'Roger Dubuis',        articles: 5  },
+    { rank: 4,  brand: 'Breitling',           articles: 5  },
+    { rank: 5,  brand: 'Cartier',             articles: 3  },
+    { rank: 6,  brand: 'Tissot',              articles: 3  },
+    { rank: 7,  brand: 'Tutima',              articles: 2  },
+    { rank: 8,  brand: 'MB&F',                articles: 2  },
+    { rank: 9,  brand: 'Chopard',             articles: 2  },
+    { rank: 10, brand: 'Omega',               articles: 2  },
+  ],
+  models: [
+    { rank: 1,  brand: 'Vacheron Constantin', model: 'Overseas Tourbillon 6000V/210T-H179',          articles: 9 },
+    { rank: 2,  brand: 'Angelus',             model: 'Chronodate Titanium Moka 0CDZF.C01A.C1282E',   articles: 4 },
+    { rank: 3,  brand: 'Angelus',             model: 'Chronodate Red Gold Moka 0CDZE.C01A.C1282B',   articles: 4 },
+    { rank: 4,  brand: 'MB&F',                model: 'LM Sequential Flyback EVO',                    articles: 2 },
+    { rank: 5,  brand: 'Chopard',             model: 'Zagato Lab One Concept 168636-3001',           articles: 2 },
+    { rank: 6,  brand: 'Audemars Piguet',     model: 'Royal Oak Offshore 26420IO.OO.A402CA.01',      articles: 1 },
+    { rank: 7,  brand: 'Hublot',              model: 'Big Bang Unico Winter Titanium Ceramic 42mm',  articles: 1 },
+    { rank: 8,  brand: 'Grand Seiko',         model: 'Heritage SBGX357',                             articles: 1 },
+    { rank: 9,  brand: 'Audemars Piguet',     model: 'Royal Oak Offshore 26420CD.OO.A029VE.01',      articles: 1 },
+    { rank: 10, brand: 'Chopard',             model: 'Alpine Eagle 41 SL Cadence 8HF',               articles: 1 },
+  ],
+}
