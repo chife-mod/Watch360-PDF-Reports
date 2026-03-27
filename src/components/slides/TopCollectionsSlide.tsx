@@ -6,6 +6,8 @@ import { spacing } from '../../theme/spacing'
 import { Header } from '../ui/Header'
 import { BrandTag } from '../ui/BrandTag'
 import { Footer } from '../ui/Footer'
+import { SlideTitle } from '../ui/SlideTitle'
+import { ArticleBar } from '../ui/ArticleBar'
 
 export interface CollectionRow {
   rank: number
@@ -65,22 +67,7 @@ export const TopCollectionsSlide: React.FC<TopCollectionsSlideProps> = ({
       <Header />
       <Footer right={footerRight} rightUrl={footerRightUrl} />
 
-      {/* ── Title ── */}
-      <p
-        style={{
-          position: 'absolute',
-          top: spacing.titleTop,
-          left: spacing.slideX,
-          margin: 0,
-          fontFamily: typography.fontFamily,
-          fontSize: 32,
-          fontWeight: 400,
-          color: colors.accent.teal,
-          lineHeight: 1,
-        }}
-      >
-        {title}
-      </p>
+      <SlideTitle><span style={{ color: colors.accent.teal }}>{title}</span></SlideTitle>
 
       {/* Two-column layout container matching spacing specs */}
       <div
@@ -153,7 +140,6 @@ function CollectionTable({
       {data.map((row, i) => {
         const globalRank = startIndex + i + 1
         const isTop = globalRank === 1
-        const barPct = Math.max((row.articles / maxArticles) * 100, 4)
 
         return (
           <div
@@ -217,51 +203,7 @@ function CollectionTable({
             </div>
 
             {/* Articles Qty + Bar */}
-            <div
-              style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-                minWidth: 0,
-              }}
-            >
-              {/* Bar */}
-              <div
-                style={{
-                  flex: 1,
-                  height: 3,
-                  background: 'rgba(255,255,255,0.08)',
-                  borderRadius: 500,
-                  overflow: 'hidden',
-                }}
-              >
-                <div
-                  style={{
-                    height: '100%',
-                    width: `${barPct}%`,
-                    background: isTop ? colors.accent.teal : 'rgba(255,255,255,0.75)',
-                    borderRadius: 500,
-                  }}
-                />
-              </div>
-
-              {/* Number */}
-              <span
-                style={{
-                  fontFamily: typography.fontFamily,
-                  fontSize: 10,
-                  fontWeight: 400,
-                  color: isTop ? colors.accent.teal : colors.text.primary,
-                  lineHeight: 1.5,
-                  width: 21,
-                  textAlign: 'right',
-                  flexShrink: 0,
-                }}
-              >
-                {row.articles}
-              </span>
-            </div>
+            <ArticleBar value={row.articles} maxValue={maxArticles} isTop={isTop} />
           </div>
         )
       })}

@@ -1,7 +1,8 @@
-import React from 'react'
+
 import { Header } from '../ui/Header'
 import { Footer } from '../ui/Footer'
 import { SlideFrame } from '../ui/SlideFrame'
+import { ArticleBar } from '../ui/ArticleBar'
 import { colors, typography, spacing } from '../../theme'
 import { IconBulb } from '@tabler/icons-react'
 
@@ -53,6 +54,19 @@ export const FEB_2026_SOURCES: SourceRow[] = [
  *   Left (432px): table — rank | source | country | articles qty + bar
  *   Right (208px): insight block: info text + AI insights (numbered)
  */
+
+const hdrStyle: React.CSSProperties = {
+  fontFamily: typography.fontFamily,
+  fontSize: 7,
+  fontWeight: 400,
+  color: colors.text.secondary,
+  textTransform: 'uppercase',
+  letterSpacing: '0.14px',
+  lineHeight: 1.5,
+  whiteSpace: 'nowrap',
+  flexShrink: 0,
+}
+
 export function TopSourcesSlide({
   title = 'Top 10 Sources',
   subtitle = 'by Articles Volume',
@@ -122,7 +136,6 @@ export function TopSourcesSlide({
         }}
       >
         {sources.map((s) => {
-          const barPct = Math.max(4, (s.articles / maxArticles) * 100)
           const isTop = s.rank === 1
           return (
             <div
@@ -201,51 +214,7 @@ export function TopSourcesSlide({
               </div>
 
               {/* Articles Qty + bar */}
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  justifyContent: 'flex-end',
-                  minWidth: 0,
-                }}
-              >
-                {/* Bar */}
-                <div
-                  style={{
-                    flex: 1,
-                    height: 3,
-                    background: 'rgba(255,255,255,0.08)',
-                    borderRadius: 500,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: `${barPct}%`,
-                      height: '100%',
-                      background: isTop ? '#00C3D9' : 'rgba(255,255,255,0.5)',
-                      borderRadius: 500,
-                    }}
-                  />
-                </div>
-              {/* Articles number */}
-                <span
-                  style={{
-                    fontFamily: typography.fontFamily,
-                    fontSize: 10,
-                    fontWeight: 400,
-                    color: isTop ? colors.accent.teal : colors.text.primary,
-                    lineHeight: 1,
-                    flexShrink: 0,
-                    width: 28,
-                    textAlign: 'right',
-                  }}
-                >
-                  {s.articles}
-                </span>
-              </div>
+              <ArticleBar value={s.articles} maxValue={maxArticles} isTop={isTop} />
             </div>
           )
         })}
@@ -353,16 +322,3 @@ export function TopSourcesSlide({
   )
 }
 
-/* ── Shared header style (reused by other slides too) ─────────────── */
-
-export const hdrStyle: React.CSSProperties = {
-  fontFamily: typography.fontFamily,
-  fontSize: 7,
-  fontWeight: 400,
-  color: colors.text.secondary,
-  textTransform: 'uppercase',
-  letterSpacing: '0.14px',
-  lineHeight: 1.5,
-  whiteSpace: 'nowrap',
-  flexShrink: 0,
-}
