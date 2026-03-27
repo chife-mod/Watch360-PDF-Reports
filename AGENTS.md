@@ -1,7 +1,7 @@
 # Watch360 PDF Reports — Agent Onboarding
 
 > Read this file first. It contains everything you need to work on this project.
-> Keep `history/history.md` updated after every significant change.
+> History is tracked via git log — use structured commit messages.
 
 ---
 
@@ -58,23 +58,20 @@ This is **not** a one-off report for Watch360. It is a **universal white-label r
 
 ## Current Status
 
-**Phase 1 (MVP) is in progress.** See full log → [`history/history.md`](history/history.md)
+**Phase 1 (MVP) complete.** History: `git log --oneline -20`
 
 ### Done
 - Project scaffold: Vite + React + TS + Tailwind
-- Design tokens: `src/theme/colors.ts`, `src/theme/typography.ts`, `src/theme/categories.ts`
-- Assets: `assets/logos/Logo_Top_On_Dark.svg`, images in WebP 80% (3x for print)
-- Implementation plan: `docs/plans/implementation-plan.md`
-- UI primitives: `SlideFrame.tsx`, `Header.tsx`, `Footer.tsx`
-- Slides: `CoverSlide.tsx`, `TableSlide.tsx`, `WatchReferencesSlide.tsx`, `QuoteSlide.tsx`
-- Viewer: vertical scroll layout, fit-to-viewport scaling (width + height)
-- Toolbar: version dropdown + Export PDF button, gradient overlay
-- Zoom slider: bottom-right, 30–100%, FIT button
-- Design system docs: `docs/design-system.md`
+- Design tokens: `src/theme/colors.ts`, `typography.ts`, `spacing.ts`, `slideStyles.ts`
+- Reusable UI primitives: SlideFrame, Header, Footer, SlideTitle, OverviewBar, BrandTable, ArticleBar, ModelCardColumn, BrandTag, LaunchDate
+- Universal slides: KeywordBrandsSlide, KeywordModelsSlide (data-driven)
+- Data layer: `src/data/keywords/` (types + per-keyword data files)
+- Report: 16 slides (cover → back-cover), full vertical scroll viewer
+- Toolbar: version dropdown + Export PDF, zoom slider (30–100% + FIT)
 
 ### Not Done (build these next, in order)
-1. `src/data/` — Google Sheets integration + data types
-2. `src/lib/pdf.ts` — Puppeteer PDF generation
+1. Google Sheets integration (`src/data/`)
+2. PDF generation (`src/lib/pdf.ts`)
 3. Additional slides as designed in Figma
 4. `.env` — Google API keys
 
@@ -85,23 +82,26 @@ This is **not** a one-off report for Watch360. It is a **universal white-label r
 ```
 Watch360-PDF-Reports/
 ├── AGENTS.md                   ← you are here
-├── CLAUDE.md                   ← Claude Code specific
-├── history/
-│   └── history.md              ← log of all work done (update this!)
 ├── docs/
 │   ├── plans/
 │   │   └── implementation-plan.md
-│   └── components/             ← per-component docs (add as you build)
+│   └── design-system.md
 ├── assets/
-│   └── logos/                  ← SF logo, Watch360 logo, cover graphic
+│   ├── logos/                  ← SF logo, Watch360 logo
+│   └── images/                 ← cover, quotes, watch photos (3x WebP)
 ├── src/
-│   ├── theme/                  ← design tokens (colors, typography)
+│   ├── theme/                  ← design tokens
+│   │   ├── colors.ts
+│   │   ├── typography.ts
+│   │   ├── spacing.ts
+│   │   └── slideStyles.ts      ← shared inline style objects
 │   ├── components/
-│   │   ├── slides/             ← one file per slide type
+│   │   ├── slides/             ← slide compositions (use ui/ primitives)
 │   │   ├── charts/             ← Recharts wrappers
-│   │   └── ui/                 ← primitives (SlideFrame, Header, Footer, Table...)
-│   ├── layouts/                ← TwoColumn.tsx etc
-│   ├── data/                   ← Google Sheets API + types
+│   │   └── ui/                 ← reusable primitives (see Component Architecture)
+│   ├── data/
+│   │   └── keywords/           ← per-keyword data files + types.ts
+│   ├── reports/                ← report definitions (feb-2026.tsx)
 │   ├── lib/                    ← pdf.ts, report.ts, storage.ts
 │   └── app/                    ← Viewer, VersionDropdown, DownloadButton
 └── reports/                    ← generated PDFs (gitignored)
@@ -145,17 +145,53 @@ App background:  #000000  (web viewer)
 
 ---
 
-## Slide Types
+## Component Architecture
 
-| ID | Component | Figma node | Status |
-|----|-----------|-----------|--------|
-| cover | CoverSlide.tsx | 4-802 | ✅ built |
-| table-with-insights | TableSlide.tsx | 2-6 | ✅ built |
-| watch-references | WatchReferencesSlide.tsx | 21-2192 | ✅ built |
-| quote | QuoteSlide.tsx | 17-2084 | ✅ built |
+Slides are **compositions** of reusable UI primitives. Never copy-paste — compose.
+
+### UI Primitives (`src/components/ui/`)
+| Component | Purpose | Replaces |
+|-----------|---------|----------|
+| `SlideFrame` | 720×450 slide container | — |
+| `Header` | Watch360 logo top-right | — |
+| `Footer` | Period left, website right | — |
+| `SlideTitle` | 32px slide heading | 15+ inline style blocks |
+| `OverviewBar` | Sources/Articles/Comments row | 4+ duplicated blocks |
+| `BrandTable` | Ranked brand table with bars | 3+ duplicated 100-line blocks |
+| `ArticleBar` | Horizontal bar chart + number | 50+ inline bar implementations |
+| `ModelCardColumn` | 5-card column with image+brand+model | 2+ duplicated 150-line blocks |
+| `BrandTag` | Category pill label | — |
+| `LaunchDate` | Launch date badge | — |
+
+### Universal Slides (`src/components/slides/`)
+| Component | Composes | Data source |
+|-----------|----------|------------|
+| `KeywordBrandsSlide` | SlideTitle + OverviewBar + 2×BrandTable | `data/keywords/*.ts` |
+| `KeywordModelsSlide` | SlideTitle + OverviewBar + 2×ModelCardColumn | `data/keywords/*.ts` |
+
+### Adding a new keyword section
+1. Create `src/data/keywords/new-keyword.ts` (~42 lines)
+2. Import in `feb-2026.tsx`, pass to `KeywordBrandsSlide` + `KeywordModelsSlide`
+3. **Zero new components needed**
+
+### Slide Types
+| ID | Component | Status |
+|----|-----------|--------|
+| cover | CoverSlide | ✅ |
+| toc | TableOfContentSlide | ✅ |
+| overview | OverviewSlide | ✅ |
+| top-brands | TopBrandsSlide | ✅ |
+| top-countries | TopCountriesSlide | ✅ |
+| top-sources | TopSourcesSlide | ✅ |
+| top-collections | TopCollectionsSlide | ✅ |
+| quote | QuoteSlide | ✅ |
+| watch-references | WatchReferencesSlide | ✅ |
+| top-models | TopModelsTableSlide | ✅ |
+| keyword-brands | KeywordBrandsSlide (universal) | ✅ |
+| keyword-models | KeywordModelsSlide (universal) | ✅ |
+| section-cover | SectionCoverSlide | ✅ |
 
 **Figma file key:** `V8XA0PVaAjxvPbq24stJXk`
-Use `get_design_context` to inspect nodes — do NOT use `get_screenshot` (causes API errors with large frames).
 
 ---
 
@@ -194,8 +230,10 @@ Due to browser scaling issues with complex SVGs spanning multiple slides during 
 
 ## Working Conventions
 
-- **Always update `TableOfContentSlide` before committing** (ensure all slides match the layout tiles).
-- **Always update `history/history.md`** after completing a feature or fixing a bug
+- **Compose, don't copy-paste** — use ui/ primitives, create new ones when needed
+- **Data separate from layout** — slide data lives in `src/data/`, not in components
+- **Always update `TableOfContentSlide`** before committing (ensure all slides match)
+- **Write structured commit messages** — this replaces history.md
 - Components are pure React — no side effects, data comes via props
 - All sizes in px (not rem) — slides are fixed-size, not responsive
 - Test each slide with `npm run dev` before moving to next
