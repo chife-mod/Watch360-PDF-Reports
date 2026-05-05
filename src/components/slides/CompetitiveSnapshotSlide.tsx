@@ -5,7 +5,14 @@ import { colors } from '../../theme/colors'
 export interface CompetitiveStatBlock {
   label: string                 // "Stock & Novelties" / "Active Meta Ads" / "Newsletters"
   /** Pairs to compare. First is usually the client brand, the rest are competitors. */
-  rows: { brand: string; value: string | number; meta?: string }[]
+  rows: {
+    brand: string
+    value: string | number
+    /** Single-line uppercase context (date, sender, "as of") */
+    meta?: string
+    /** Newsletter / email subject — italic body line under meta */
+    subject?: string
+  }[]
   /** Optional "as of" / context note shown in small caps */
   note?: string
 }
@@ -171,6 +178,24 @@ export function CompetitiveSnapshotSlide({
                         }}
                       >
                         {row.meta}
+                      </span>
+                    )}
+                    {row.subject && (
+                      <span
+                        style={{
+                          fontSize: 9,
+                          color: 'white',
+                          opacity: 0.7,
+                          fontStyle: 'italic',
+                          lineHeight: 1.4,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          marginTop: 2,
+                        }}
+                      >
+                        «{row.subject}»
                       </span>
                     )}
                   </div>

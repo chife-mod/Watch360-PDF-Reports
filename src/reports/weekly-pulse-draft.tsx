@@ -238,6 +238,8 @@ const COMPETITIVE_BLOCKS = [
         brand: 'Gemmyo',
         value: 1,
         meta: 'Apr 24 · hello@gemmyo.com',
+        subject:
+          'Découvrez les rendez-vous design incontournables du Salone del Mobile et de la Milan Design Week',
       },
     ],
     note: 'Sent during the period',
